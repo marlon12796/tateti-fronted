@@ -4,7 +4,7 @@ import { effect, Injectable, signal } from "@angular/core";
 	providedIn: "root",
 })
 export class UserService {
-	readonly name = signal<string>(localStorage.getItem("nombre") ?? "anonymous");
+	readonly name = signal<string>(localStorage.getItem("nombre") ?? "");
 
 	saveNameStorage = effect(() => {
 		localStorage.setItem("nombre", this.name());
