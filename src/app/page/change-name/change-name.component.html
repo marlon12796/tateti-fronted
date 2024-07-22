@@ -1,0 +1,8 @@
+<form [formGroup]="profileForm" (ngSubmit)="changeName()">
+  <label for="name">ESCRIBE TU NOMBRE</label>
+  <input type="text" id="name" formControlName="name" [value]="userService.name()">
+  <button [disabled]="!profileForm.valid">Cambiar nombre</button>
+</form>
+<p>{{userService.name()}}</p>
+
+<a routerLink="/">Volver</a>

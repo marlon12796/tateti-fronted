@@ -1,7 +1,6 @@
 import {
 	type ApplicationConfig,
 	provideExperimentalZonelessChangeDetection,
-	provideZoneChangeDetection,
 } from "@angular/core";
 import { provideRouter } from "@angular/router";
 
