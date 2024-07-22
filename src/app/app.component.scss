@@ -1,0 +1,59 @@
+@use "./../../public/colors.scss";
+
+$border-radius-base: 15px;
+$padding-console: 15px;
+
+.container-game {
+  background-color: colors.$accent-1;
+  max-width: 30rem;
+  border-radius: 40px;
+  padding: calc($border-radius-base + $padding-console);
+  height: 98svh;
+  display: grid;
+  grid-template-rows: 1fr auto 42%;
+}
+
+.container-game__screen {
+  background-color: colors.$background;
+  border-radius: $border-radius-base;
+  outline: 1rem solid colors.$primary;
+  outline-offset: -1rem;
+  position: relative;
+  padding: 1em 2em;
+  overflow: hidden;
+}
+
+p {
+  margin-block: 10px;
+  font-weight: bold;
+}
+
+// @media (width <=600px) {
+//   body {
+//     margin: 0;
+//   }
+
+//   .container-game {
+//     max-width: 100%;
+//   }
+// }
+
+// @media (height <=900px) {
+//   body {
+//     margin: 0;
+//   }
+
+//   app-buttons {
+//     display: none;
+//   }
+
+//   .container-game__screen {
+//     height: 100svh;
+//     box-sizing: border-box;
+//     border-radius: 0;
+//   }
+
+//   .container-game__screen {
+//     height: 87svh;
+//   }
+// }

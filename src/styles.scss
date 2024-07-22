@@ -7,29 +7,41 @@
   color: colors.$primary;
 }
 
-h1, h2, h3, h4, h5, h6{
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:is(h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6, p, body) {
   margin: 0;
 }
 
-a{
+
+a {
   text-decoration: none;
 }
 
-.flex-apart{
+.flex-apart {
   display: flex;
   justify-content: space-between;
 }
 
-.flex-column{
+.flex-column {
   display: flex;
   flex-direction: column;
 }
 
-.italic{
+.italic {
   font-style: italic;
 }
 
-.boton{
+.button {
   background-color: transparent;
   border-radius: 20px;
   border: 1px solid colors.$primary;
@@ -40,14 +52,9 @@ a{
   text-transform: uppercase;
   min-width: 200px;
   text-align: center;
+
   &:hover {
     background-color: colors.$primary;
     color: colors.$background;
-  }
-}
-
-@media(width <= 600px){
-  body{
-    margin: 0;
   }
 }

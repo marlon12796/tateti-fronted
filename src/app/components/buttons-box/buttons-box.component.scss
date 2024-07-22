@@ -1,0 +1,102 @@
+@use "./../../../../public/colors.scss";
+
+.container {
+  pointer-events: none;
+  justify-content: space-between;
+}
+
+.d-pad-container {
+  $size-d-pad: 105px;
+  position: relative;
+  aspect-ratio: 1/1;
+  border: 1.5px solid colors.$accent-1-contrast;
+  width: $size-d-pad;
+  border-radius: 50%;
+
+  :is(div) {
+    $cross-width: 20px;
+    $full-size: 90%;
+    background-color: colors.$primary;
+    position: absolute;
+    width: $cross-width;
+    height: $full-size;
+
+    &:first-child {
+      left: 50%;
+      transform: translateX(-50%) translateY(calc((100% - $full-size) / 2));
+    }
+
+    &:last-child {
+      transform: translateX(-50%) translateY(calc((100% - $full-size) / 2)) rotate(90deg);
+      left: 50%;
+    }
+  }
+}
+
+.round-button {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: colors.$accent-2;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+}
+
+.round-button__pressed {
+  translate: 0 40px;
+}
+
+.x-o-container {
+  translate: 0 40px;
+}
+
+.x-o-border-container {
+  border: 1.5px solid colors.$accent-1-contrast;
+  border-radius: 2rem;
+  padding: 5px;
+  rotate: -45deg;
+  width: 110px;
+}
+
+.buttons-start-container {
+  margin: auto;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+
+  & :where(div) {
+    translate: 0 40px;
+    margin: 0;
+  }
+}
+
+.long-button {
+  width: 80px;
+  margin: 10px;
+  height: 10px;
+  rotate: -35deg;
+  border-radius: 2rem;
+  border: 1.5px solid colors.$primary;
+  display: flex;
+  justify-content: center;
+}
+
+.long-button__pressed {
+  translate: 0 14px;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.speaker-container {
+  width: 80px;
+  rotate: 45deg;
+  margin-left: auto;
+  margin-top: auto;
+
+  &>div {
+    aspect-ratio: 9;
+    margin: 8px;
+    border-radius: 2rem;
+    border: 1.5px solid colors.$primary;
+  }
+}
