@@ -35,6 +35,9 @@ importers:
       rxjs:
         specifier: ~7.8.0
         version: 7.8.1
+      socket.io-client:
+        specifier: ^4.7.5
+        version: 4.7.5
       tslib:
         specifier: ^2.3.0
         version: 2.6.3
@@ -51,6 +54,9 @@ importers:
       '@angular/compiler-cli':
         specifier: ^18.1.0
         version: 18.1.1(@angular/compiler@18.1.1(@angular/core@18.1.1(rxjs@7.8.1)(zone.js@0.14.8)))(typescript@5.5.3)
+      '@biomejs/biome':
+        specifier: 1.8.3
+        version: 1.8.3
       '@types/jasmine':
         specifier: ~5.1.0
         version: 5.1.4
@@ -842,6 +848,59 @@ packages:
   '@babel/types@7.24.9':
     resolution: {integrity: sha512-xm8XrMKz0IlUdocVbYJe0Z9xEgidU7msskG8BbhnTPK/HZ2z/7FP7ykqPgrUH+C+r414mNfNWam1f2vqOjqjYQ==}
     engines: {node: '>=6.9.0'}
+
+  '@biomejs/biome@1.8.3':
+    resolution: {integrity: sha512-/uUV3MV+vyAczO+vKrPdOW0Iaet7UnJMU4bNMinggGJTAnBPjCoLEYcyYtYHNnUNYlv4xZMH6hVIQCAozq8d5w==}
+    engines: {node: '>=14.21.3'}
+    hasBin: true
+
+  '@biomejs/cli-darwin-arm64@1.8.3':
+    resolution: {integrity: sha512-9DYOjclFpKrH/m1Oz75SSExR8VKvNSSsLnVIqdnKexj6NwmiMlKk94Wa1kZEdv6MCOHGHgyyoV57Cw8WzL5n3A==}
+    engines: {node: '>=14.21.3'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@biomejs/cli-darwin-x64@1.8.3':
+    resolution: {integrity: sha512-UeW44L/AtbmOF7KXLCoM+9PSgPo0IDcyEUfIoOXYeANaNXXf9mLUwV1GeF2OWjyic5zj6CnAJ9uzk2LT3v/wAw==}
+    engines: {node: '>=14.21.3'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@biomejs/cli-linux-arm64-musl@1.8.3':
+    resolution: {integrity: sha512-9yjUfOFN7wrYsXt/T/gEWfvVxKlnh3yBpnScw98IF+oOeCYb5/b/+K7YNqKROV2i1DlMjg9g/EcN9wvj+NkMuQ==}
+    engines: {node: '>=14.21.3'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@biomejs/cli-linux-arm64@1.8.3':
+    resolution: {integrity: sha512-fed2ji8s+I/m8upWpTJGanqiJ0rnlHOK3DdxsyVLZQ8ClY6qLuPc9uehCREBifRJLl/iJyQpHIRufLDeotsPtw==}
+    engines: {node: '>=14.21.3'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@biomejs/cli-linux-x64-musl@1.8.3':
+    resolution: {integrity: sha512-UHrGJX7PrKMKzPGoEsooKC9jXJMa28TUSMjcIlbDnIO4EAavCoVmNQaIuUSH0Ls2mpGMwUIf+aZJv657zfWWjA==}
+    engines: {node: '>=14.21.3'}
+    cpu: [x64]
+    os: [linux]
+
+  '@biomejs/cli-linux-x64@1.8.3':
+    resolution: {integrity: sha512-I8G2QmuE1teISyT8ie1HXsjFRz9L1m5n83U1O6m30Kw+kPMPSKjag6QGUn+sXT8V+XWIZxFFBoTDEDZW2KPDDw==}
+    engines: {node: '>=14.21.3'}
+    cpu: [x64]
+    os: [linux]
+
+  '@biomejs/cli-win32-arm64@1.8.3':
+    resolution: {integrity: sha512-J+Hu9WvrBevfy06eU1Na0lpc7uR9tibm9maHynLIoAjLZpQU3IW+OKHUtyL8p6/3pT2Ju5t5emReeIS2SAxhkQ==}
+    engines: {node: '>=14.21.3'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@biomejs/cli-win32-x64@1.8.3':
+    resolution: {integrity: sha512-/PJ59vA1pnQeKahemaQf4Nyj7IKUvGQSc3Ze1uIGi+Wvr1xF7rGobSrAAG01T/gUDG21vkDsZYM03NAmPiVkqg==}
+    engines: {node: '>=14.21.3'}
+    cpu: [x64]
+    os: [win32]
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -2095,6 +2154,9 @@ packages:
 
   encoding@0.1.13:
     resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+
+  engine.io-client@6.5.4:
+    resolution: {integrity: sha512-GeZeeRjpD2qf49cZQ0Wvh/8NJNfeXkXXcoGh+F77oEAgo9gUHwT1fCRxSNU+YEEaysOJTnsFHmM5oAcPy4ntvQ==}
 
   engine.io-parser@5.2.3:
     resolution: {integrity: sha512-HqD3yTBfnBxIrbnM1DoD6Pcq8NECnh8d4As1Qgh0z5Gg3jRRIqijury0CL3ghu/edArpUYiYqQiDUQBIs4np3Q==}
@@ -3586,6 +3648,10 @@ packages:
   socket.io-adapter@2.5.5:
     resolution: {integrity: sha512-eLDQas5dzPgOWCk9GuuJC2lBqItuhKI4uxGgo9aIV7MYbk2h9Q6uULEh8WBzThoI7l+qU9Ast9fVUmkqPP9wYg==}
 
+  socket.io-client@4.7.5:
+    resolution: {integrity: sha512-sJ/tqHOCe7Z50JCBCXrsY3I2k03iOiUe+tj1OmKeD2lXPiGH/RUCdTZFoqVyN7l1MnpIzPrGtLcijffmeouNlQ==}
+    engines: {node: '>=10.0.0'}
+
   socket.io-parser@4.2.4:
     resolution: {integrity: sha512-/GbIKmo8ioc+NIWIhwdecY0ge+qVBSMdgxGygevmdHj24bsfgtCmcUUcQ5ZzcylGFHsN3k4HB4Cgkl96KVnuew==}
     engines: {node: '>=10.0.0'}
@@ -4044,6 +4110,10 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+
+  xmlhttprequest-ssl@2.0.0:
+    resolution: {integrity: sha512-QKxVRxiRACQcVuQEYFsI1hhkrMlrXHPegbbd1yn9UHOmRxY+si12nQYzri3vbzt8VdTTRviqcKxcyllFas5z2A==}
+    engines: {node: '>=0.4.0'}
 
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
@@ -5168,6 +5238,41 @@ snapshots:
       '@babel/helper-string-parser': 7.24.8
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
+
+  '@biomejs/biome@1.8.3':
+    optionalDependencies:
+      '@biomejs/cli-darwin-arm64': 1.8.3
+      '@biomejs/cli-darwin-x64': 1.8.3
+      '@biomejs/cli-linux-arm64': 1.8.3
+      '@biomejs/cli-linux-arm64-musl': 1.8.3
+      '@biomejs/cli-linux-x64': 1.8.3
+      '@biomejs/cli-linux-x64-musl': 1.8.3
+      '@biomejs/cli-win32-arm64': 1.8.3
+      '@biomejs/cli-win32-x64': 1.8.3
+
+  '@biomejs/cli-darwin-arm64@1.8.3':
+    optional: true
+
+  '@biomejs/cli-darwin-x64@1.8.3':
+    optional: true
+
+  '@biomejs/cli-linux-arm64-musl@1.8.3':
+    optional: true
+
+  '@biomejs/cli-linux-arm64@1.8.3':
+    optional: true
+
+  '@biomejs/cli-linux-x64-musl@1.8.3':
+    optional: true
+
+  '@biomejs/cli-linux-x64@1.8.3':
+    optional: true
+
+  '@biomejs/cli-win32-arm64@1.8.3':
+    optional: true
+
+  '@biomejs/cli-win32-x64@1.8.3':
+    optional: true
 
   '@colors/colors@1.5.0': {}
 
@@ -6409,6 +6514,18 @@ snapshots:
     dependencies:
       iconv-lite: 0.6.3
     optional: true
+
+  engine.io-client@6.5.4:
+    dependencies:
+      '@socket.io/component-emitter': 3.1.2
+      debug: 4.3.5
+      engine.io-parser: 5.2.3
+      ws: 8.17.1
+      xmlhttprequest-ssl: 2.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   engine.io-parser@5.2.3: {}
 
@@ -8052,6 +8169,17 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  socket.io-client@4.7.5:
+    dependencies:
+      '@socket.io/component-emitter': 3.1.2
+      debug: 4.3.5
+      engine.io-client: 6.5.4
+      socket.io-parser: 4.2.4
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   socket.io-parser@4.2.4:
     dependencies:
       '@socket.io/component-emitter': 3.1.2
@@ -8521,6 +8649,8 @@ snapshots:
   ws@8.17.1: {}
 
   ws@8.18.0: {}
+
+  xmlhttprequest-ssl@2.0.0: {}
 
   y18n@5.0.8: {}
 

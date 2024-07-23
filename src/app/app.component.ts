@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { ButtonsBoxComponent } from "./components/buttons-box/buttons-box.component";
+import { ServerService } from "./services/server.service";
 
 @Component({
 	selector: "app-root",
@@ -11,4 +12,8 @@ import { ButtonsBoxComponent } from "./components/buttons-box/buttons-box.compon
 })
 export class AppComponent {
 	title = "tateti-fronted";
+	serverService = inject(ServerService);
+	ngOnInit(): void {
+		this.serverService.connect();
+	}
 }

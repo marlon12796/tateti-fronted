@@ -7,5 +7,10 @@ import { requireNameGuard } from "./guards/require-name.guard";
 export const routes: Routes = [
 	{ path: "", component: HomeComponent, canActivate: [requireNameGuard] },
 	{ path: "play", component: PlayComponent, canActivate: [requireNameGuard] },
+	{ path: "play-private",component: PlayComponent, canActivate: [requireNameGuard], data: { isPrivate: true } },
+	 {
+    path: "play/:id",
+ component: PlayComponent, canActivate: [requireNameGuard]
+  },
 	{ path: "change-name", component: ChangeNameComponent },
 ];
