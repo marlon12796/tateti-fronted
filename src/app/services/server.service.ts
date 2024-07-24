@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core'
 import { io, type Socket } from 'socket.io-client'
 import type { Room } from '@/app/page/play/game.types'
 import { UserService } from './user.service'
+import { type ResponsePlayerJoined } from './types/server'
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,10 @@ export class ServerService {
   connect() {
     if (!this.connected) this.server.connect()
   }
-  isConnected(): boolean {
+  isConnected() {
     return this.connected
   }
   async searchRoomPublic() {
-    if (!this.isConnected()) return
     try {
       const res: { roomId: string | null } = await this.server.timeout(5000).emitWithAck('searchRoom')
       return res
@@ -38,7 +38,6 @@ export class ServerService {
     }
   }
   async createRoom(type: Room['type']) {
-    if (!this.isConnected()) return
     try {
       const res = await this.server.timeout(5000).emitWithAck('createRoom', { type, player: this.userService.name() })
       return res
@@ -47,13 +46,14 @@ export class ServerService {
     }
   }
   async joinRoom(roomId: Room['id']) {
-    if (!this.isConnected()) return
     try {
-      const res = await this.server.timeout(5000).emitWithAck('joinRoom', { roomId, player: this.userService.name() })
-      console.log('resultado de unirse a sala')
-      // return res;
+      const res = await this.server.timeout(5000).emitWithAck('joinRoom', { roomId, playerName: this.userService.name() })
+      return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
     }
+  }
+  onPlayerJoined(callback: (data: ResponsePlayerJoined) => void) {
+    this.server.on('playerJoined', callback)
   }
 }

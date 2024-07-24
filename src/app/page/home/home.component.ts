@@ -17,6 +17,6 @@ export class HomeComponent {
   async searchPublicRoom() {
     const room = await this.serverService.searchRoomPublic()
     if (!room?.roomId) return this.router.navigate(['play'])
-    return this.router.navigate(['play', room])
+    return this.router.navigate(['play', room.roomId])
   }
 }

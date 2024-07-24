@@ -15,14 +15,13 @@ export class PlayComponent {
   isPrivate = input()
   id = input<string>()
   ngOnInit() {
-    if (!this.isPrivate && !this.id()) {
-      this.serverService.createRoom('public')
-      return
-    }
-    if (this.id() && typeof this.id() === 'string') {
-      this.serverService.joinRoom(this.id() ?? '')
-      return
-    }
-    this.serverService.createRoom('private')
+    if (!this.isPrivate() && !this.id()) this.serverService.createRoom('public')
+    if (this.isPrivate() && !this.id()) this.serverService.createRoom('private')
+    if (this.id() && typeof this.id() === 'string') this.serverService.joinRoom(this.id() ?? '')
+
+    this.serverService.onPlayerJoined((data) => {
+      console.log(data.message)
+      console.log(data.room)
+    })
   }
 }
