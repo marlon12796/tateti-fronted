@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core'
+import { inject, Injectable, signal } from '@angular/core'
 import { io, type Socket } from 'socket.io-client'
 import type { Room } from '@/app/page/play/game.types'
 import { UserService } from './user.service'
@@ -13,6 +13,7 @@ export class ServerService {
   private connected = false
   private server: Socket
   private userService = inject(UserService)
+  private roomId = signal<string>('')
 
   constructor() {
     this.server = io('http://localhost:3000', { autoConnect: false })
@@ -30,14 +31,17 @@ export class ServerService {
   connect() {
     if (!this.connected) this.server.connect()
   }
-
   isConnected() {
     return this.connected
+  }
+  getRoomId() {
+    return this.roomId()
   }
 
   async searchRoomPublic() {
     try {
       const res: ResponseSearchRoom = await this.server.timeout(CONFIG.SOCKET_TIMEOUT).emitWithAck('searchRoom')
+      console.log(res)
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
@@ -49,6 +53,7 @@ export class ServerService {
       const res: ResponseCommonRoom = await this.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
         .emitWithAck('createRoom', { type, player: this.userService.name() })
+      if (res.room.id) this.roomId.set(res.room.id)
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
@@ -60,6 +65,7 @@ export class ServerService {
       const res: ResponseCommonRoom = await this.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
         .emitWithAck('joinRoom', { roomId, playerName: this.userService.name() })
+      if (res.room.id) this.roomId.set(res.room.id)
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
@@ -91,6 +97,7 @@ export class ServerService {
       const response: string = await this.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
         .emitWithAck('leaveRoom', { roomId, playerName: this.userService.name() })
+      console.log(this.leaveRoom)
       return response
     } catch (_e) {
       throw new Error('Error al conectar con el evento')

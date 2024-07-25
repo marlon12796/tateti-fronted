@@ -1,0 +1,7 @@
+@for (item of buttonGrid; track $index; let idx = $index) {
+<div>
+  @for (square of item; track $index;let idx=$index) {
+  <button (click)="play(square)">{{square+1}}</button>
+  }
+</div>
+}

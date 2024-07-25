@@ -1,3 +1,5 @@
+import { BoardComponent } from '@/app/components/board/board.component'
+import { DetailsGameComponent } from '@/app/components/details-game/details-game.component'
 import { ServerService } from '@/app/services/server.service'
 import { UserService } from '@/app/services/user.service'
 import { Component, inject, input, OnDestroy, OnInit } from '@angular/core'
@@ -5,7 +7,7 @@ import { Subscription } from 'rxjs'
 @Component({
   selector: 'app-play',
   standalone: true,
-  imports: [],
+  imports: [BoardComponent, DetailsGameComponent],
   templateUrl: './play.component.html',
   styleUrl: './play.component.scss'
 })
@@ -31,9 +33,9 @@ export class PlayComponent implements OnInit, OnDestroy {
     this.subscriptions.add(playerLeftSubscription)
   }
   ngOnDestroy() {
-    if (this.id() !== undefined)
-      this.serverService.leaveRoom(this.id() ?? '').catch((error) => console.error('Error al abandonar la sala', error))
-
+    this.serverService
+      .leaveRoom(this.serverService.getRoomId())
+      .catch((error) => console.error('Error al abandonar la sala', error))
     this.subscriptions.unsubscribe()
   }
 }
