@@ -1,19 +1,17 @@
 import { inject, Injectable, signal } from '@angular/core'
 import { io, type Socket } from 'socket.io-client'
-import type { Room } from '@/app/page/play/game.types'
 import { UserService } from './user.service'
 import type { ResponsePlayerLeft, ResponsePlayerJoined, ResponseCommonRoom, ResponseSearchRoom } from './types/server'
 import { Observable } from 'rxjs'
-import { CONFIG } from '@/config'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServerService {
   private connected = false
-  private server: Socket
-  private userService = inject(UserService)
-  private roomId = signal<string>('')
+  server: Socket
+  userService = inject(UserService)
+  roomId = signal<string>('')
 
   constructor() {
     this.server = io('http://localhost:3000', { autoConnect: false })
@@ -31,76 +29,24 @@ export class ServerService {
   connect() {
     if (!this.connected) this.server.connect()
   }
+
   isConnected() {
     return this.connected
   }
-  getRoomId() {
-    return this.roomId()
-  }
-
-  async searchRoomPublic() {
-    try {
-      const res: ResponseSearchRoom = await this.server.timeout(CONFIG.SOCKET_TIMEOUT).emitWithAck('searchRoom')
-      console.log(res)
-      return res
-    } catch (_e) {
-      throw new Error('Error al conectar con el evento')
-    }
-  }
-
-  async createRoom(type: Room['type']) {
-    try {
-      const res: ResponseCommonRoom = await this.server
-        .timeout(CONFIG.SOCKET_TIMEOUT)
-        .emitWithAck('createRoom', { type, player: this.userService.name() })
-      if (res.room.id) this.roomId.set(res.room.id)
-      return res
-    } catch (_e) {
-      throw new Error('Error al conectar con el evento')
-    }
-  }
-
-  async joinRoom(roomId: Room['id']) {
-    try {
-      const res: ResponseCommonRoom = await this.server
-        .timeout(CONFIG.SOCKET_TIMEOUT)
-        .emitWithAck('joinRoom', { roomId, playerName: this.userService.name() })
-      if (res.room.id) this.roomId.set(res.room.id)
-      return res
-    } catch (_e) {
-      throw new Error('Error al conectar con el evento')
-    }
-  }
-
-  onPlayerJoined(): Observable<ResponsePlayerJoined> {
-    return new Observable<ResponsePlayerJoined>((observer) => {
-      const handler = (data: ResponsePlayerJoined) => observer.next(data)
-      this.server.on('playerJoined', handler)
+  private createObservable<Data>(event: string): Observable<Data> {
+    return new Observable<Data>((observer) => {
+      const handler = (data: Data) => observer.next(data)
+      this.server.on(event, handler)
       return () => {
-        this.server.off('playerJoined', handler)
+        this.server.off(event, handler)
       }
     })
+  }
+  onPlayerJoined(): Observable<ResponsePlayerJoined> {
+    return this.createObservable<ResponsePlayerJoined>('playerJoined')
   }
 
   onPlayerLeft(): Observable<ResponsePlayerLeft> {
-    return new Observable<ResponsePlayerLeft>((observer) => {
-      const handler = (data: ResponsePlayerLeft) => observer.next(data)
-      this.server.on('playerLeft', handler)
-      return () => {
-        this.server.off('playerLeft', handler)
-      }
-    })
-  }
-
-  async leaveRoom(roomId: Room['id']) {
-    try {
-      const response: string = await this.server
-        .timeout(CONFIG.SOCKET_TIMEOUT)
-        .emitWithAck('leaveRoom', { roomId, playerName: this.userService.name() })
-      console.log(this.leaveRoom)
-      return response
-    } catch (_e) {
-      throw new Error('Error al conectar con el evento')
-    }
+    return this.createObservable<ResponsePlayerLeft>('playerLeft')
   }
 }

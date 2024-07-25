@@ -1,4 +1,8 @@
-type Player = string
+interface Player {
+  name: string
+  health: number
+  clientId: string
+}
 export interface Room {
   id: string
   type: 'public' | 'private'

@@ -1,4 +1,4 @@
-import { ServerService } from '@/app/services/server.service'
+import { RoomService } from '@/app/services/room.service'
 import { UserService } from '@/app/services/user.service'
 import { Component, inject } from '@angular/core'
 import { Router, RouterLink } from '@angular/router'
@@ -12,10 +12,10 @@ import { Router, RouterLink } from '@angular/router'
 })
 export class HomeComponent {
   readonly userService = inject(UserService)
-  readonly serverService = inject(ServerService)
+  readonly roomService = inject(RoomService)
   router = inject(Router)
   async searchPublicRoom() {
-    const room = await this.serverService.searchRoomPublic()
+    const room = await this.roomService.searchRoomPublic()
     if (!room?.roomId) return this.router.navigate(['play'])
     return this.router.navigate(['play', room.roomId])
   }
