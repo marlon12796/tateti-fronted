@@ -1,3 +1,9 @@
-<p>Jugador 1 {{roomService.player1()}}</p>
-<p>Jugador 2 {{roomService.player2()}}</p>
+<p>Jugador 1 {{roomService.player1().name}}</p>
+@for(vida of healthPlayer1(); track $index){
+❤️
+}
+<p>Jugador 2 {{roomService.player2().name}}</p>
+@for(vida of healthPlayer2(); track $index){
+❤️
+}
 <p>Estado Juego {{roomService.stateGame()}}</p>

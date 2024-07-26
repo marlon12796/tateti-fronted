@@ -1,5 +1,5 @@
 import { RoomService } from '@/app/services/room.service'
-import { Component, inject } from '@angular/core'
+import { Component, computed, inject } from '@angular/core'
 
 @Component({
   selector: 'app-details-game',
@@ -10,4 +10,6 @@ import { Component, inject } from '@angular/core'
 })
 export class DetailsGameComponent {
   roomService = inject(RoomService)
+  healthPlayer1 = computed(() => Array.from({ length: this.roomService.player1().health }))
+  healthPlayer2 = computed(() => Array.from({ length: this.roomService.player2().health }))
 }
