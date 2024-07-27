@@ -1,9 +1,8 @@
-import { computed, inject, Injectable, signal } from '@angular/core'
+import { inject, Injectable, signal } from '@angular/core'
 import { ServerService } from './server.service'
-import { PlayerTurn, type Player, type Room } from '@/app/page/play/game.types'
+import { BOARD_POSITION, GameState, PlayerTurn, type Player, type Room } from '@/app/interfaces/game'
 import type { ResponseCommonRoom, ResponseSearchRoom } from './types/server'
 import { CONFIG } from '@/config'
-import { GameState } from './types/room'
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +13,8 @@ export class RoomService {
   readonly player2 = signal<Player>({ health: 0, name: '' })
   readonly stateGame = signal<GameState>(GameState['WAITING_FOR_PARTNER'])
   readonly numberPlayer = signal<PlayerTurn | null>(null)
+  readonly board = signal<(PlayerTurn | '')[]>(Array(9).fill(''))
+
   async searchRoomPublic(): Promise<ResponseSearchRoom> {
     try {
       const res: ResponseSearchRoom = await this.serverService.server.timeout(CONFIG.SOCKET_TIMEOUT).emitWithAck('searchRoom')
@@ -65,14 +66,34 @@ export class RoomService {
       throw new Error('Error al conectar con el evento')
     }
   }
+  async turnPlayerRoom(boardPosition: BOARD_POSITION) {
+    try {
+      const response: ResponseCommonRoom = await this.serverService.server
+        .timeout(CONFIG.SOCKET_TIMEOUT)
+        .emitWithAck('makeMove', {
+          roomId: this.serverService.roomId(),
+          playerPosition: this.numberPlayer(),
+          boardPosition
+        })
+      this.updateRoomState(response.room)
+      return response
+    } catch (_e) {
+      throw new Error('Error al conectar con el evento')
+    }
+  }
+  getRoomId() {
+    return this.serverService.roomId()
+  }
 
   onPlayerJoined() {
     return this.serverService.onPlayerJoined().subscribe((data) => {
       this.handleRoomUpdate(data.room)
     })
   }
-  getRoomId() {
-    return this.serverService.roomId()
+  onPlayerMove() {
+    this.serverService.onPlayerMove().subscribe((room) => {
+      this.updateRoomState(room)
+    })
   }
   onPlayerLeft() {
     return this.serverService.onPlayerLeft().subscribe((data) => {
@@ -82,6 +103,12 @@ export class RoomService {
   private handleRoomUpdate(room: Room) {
     this.player1.set({ health: room.players[0].health, name: room.players[0].name })
     this.player2.set({ health: room.players[1].health, name: room.players[1].name })
+    this.stateGame.set(room.state)
+  }
+  private updateRoomState(room: Room) {
+    this.player1.set(room.players[0])
+    this.player2.set(room.players[1])
+    this.board.set(room.board)
     this.stateGame.set(room.state)
   }
 }

@@ -1,6 +1,5 @@
-import { PlayerTurn } from '@/app/page/play/game.types'
+import { type BOARD_POSITION, GameState, PlayerTurn } from '@/app/interfaces/game'
 import { RoomService } from '@/app/services/room.service'
-import { GameState } from '@/app/services/types/room'
 import { Component, computed, inject } from '@angular/core'
 
 @Component({
@@ -11,13 +10,23 @@ import { Component, computed, inject } from '@angular/core'
   styleUrl: './board.component.scss'
 })
 export class BoardComponent {
-  readonly buttonGrid: [[number, number, number], [number, number, number], [number, number, number]] = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8]
-  ]
   readonly roomService = inject(RoomService)
+  readonly boardChunks = computed(() => {
+    const chunks = []
+    for (let i = 0; i < this.roomService.board().length; i += 3) {
+      const row = this.roomService.board().slice(i, i + 3)
+      const rowIndex = row.map((cell, idx) => ({
+        value: cell,
+        id: (i + idx) as BOARD_POSITION
+      }))
+      chunks.push(rowIndex)
+    }
+    return chunks
+  })
+
   isMyTurn = computed(() => {
+    console.log(this.roomService.stateGame())
+    console.log(this.roomService.numberPlayer())
     const isFirstPlayer =
       this.roomService.stateGame() === GameState['TURN_PLAYER1'] && this.roomService.numberPlayer() === PlayerTurn['PLAYER_1']
     const isSecondPlayer =
@@ -25,7 +34,7 @@ export class BoardComponent {
     return isFirstPlayer || isSecondPlayer
   })
 
-  play(position: number) {
-    console.log(position)
+  play(position: BOARD_POSITION) {
+    this.roomService.turnPlayerRoom(position)
   }
 }

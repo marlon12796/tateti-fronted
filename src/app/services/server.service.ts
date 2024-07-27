@@ -1,8 +1,9 @@
 import { inject, Injectable, signal } from '@angular/core'
 import { io, type Socket } from 'socket.io-client'
 import { UserService } from './user.service'
-import type { ResponsePlayerLeft, ResponsePlayerJoined, ResponseCommonRoom, ResponseSearchRoom } from './types/server'
+import type { ResponsePlayerLeft, ResponsePlayerJoined, ResponsePlayerTurn } from './types/server'
 import { Observable } from 'rxjs'
+import { Room } from '../interfaces/game'
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,9 @@ export class ServerService {
   }
   onPlayerJoined(): Observable<ResponsePlayerJoined> {
     return this.createObservable<ResponsePlayerJoined>('playerJoined')
+  }
+  onPlayerMove(): Observable<Room> {
+    return this.createObservable<Room>('makeMove')
   }
 
   onPlayerLeft(): Observable<ResponsePlayerLeft> {

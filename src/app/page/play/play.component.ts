@@ -25,8 +25,10 @@ export class PlayComponent implements OnInit, OnDestroy {
 
     const playerJoinedSubscription = this.roomService.onPlayerJoined()
     const playerLeftSubscription = this.roomService.onPlayerLeft()
+    const playerMoveSubscription = this.roomService.onPlayerMove()
     
     this.subscriptions.add(playerJoinedSubscription)
+    this.subscriptions.add(playerMoveSubscription)
     this.subscriptions.add(playerLeftSubscription)
   }
   ngOnDestroy() {

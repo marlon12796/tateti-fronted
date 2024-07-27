@@ -1,7 +1,9 @@
-@for (item of buttonGrid; track $index; let idx = $index) {
+@for (row of boardChunks(); track $index; let rowIndex = $index) {
 <div>
-  @for (square of item; track $index;let idx=$index) {
-  <button (click)="play(square)" [disabled]="!isMyTurn()">{{square+1}}</button>
+  @for (cell of row; track $index; let cellIndex = $index) {
+  <button (click)="play(cell.id)" [disabled]="!isMyTurn()">
+    {{ cell.value }}
+  </button>
   }
 </div>
 }

@@ -1,4 +1,4 @@
-import { type Room } from '@/app/page/play/game.types'
+import { GameState, PlayerTurn, type Room } from '@/app/interfaces/game'
 
 export interface ResponsePlayerJoined {
   message: string
@@ -7,6 +7,11 @@ export interface ResponsePlayerJoined {
 export interface ResponsePlayerLeft {
   playerName: string
   room: Room
+}
+export interface ResponsePlayerTurn {
+  playerTurn: PlayerTurn
+  boardGame: (PlayerTurn | '')[]
+  gameState: GameState
 }
 export interface ResponseCommonRoom {
   success: boolean
