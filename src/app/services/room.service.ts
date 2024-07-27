@@ -81,6 +81,17 @@ export class RoomService {
       throw new Error('Error al conectar con el evento')
     }
   }
+  async requestNewTurn() {
+    try {
+      const response: ResponseCommonRoom = await this.serverService.server
+        .timeout(CONFIG.SOCKET_TIMEOUT)
+        .emitWithAck('newTurn', { roomId: this.serverService.roomId() })
+      this.updateRoomState(response.room)
+      return response
+    } catch (_e) {
+      throw new Error('Error al conectar con el evento de solicitud de nuevo turno')
+    }
+  }
   getRoomId() {
     return this.serverService.roomId()
   }
@@ -92,6 +103,11 @@ export class RoomService {
   }
   onPlayerMove() {
     this.serverService.onPlayerMove().subscribe((room) => {
+      this.updateRoomState(room)
+    })
+  }
+  onGameNewTurn() {
+    this.serverService.onGameNewTurn().subscribe((room) => {
       this.updateRoomState(room)
     })
   }

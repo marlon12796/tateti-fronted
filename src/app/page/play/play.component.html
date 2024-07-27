@@ -1,2 +1,7 @@
 <app-details-game />
 <app-board />
+@if (roomService.stateGame()==='VICTORIA_JUGADOR1'||
+roomService.stateGame()==='VICTORIA_JUGADOR2'||
+roomService.stateGame()==='EMPATE') {
+<button (click)="newTurn()">Próxima ronda</button>
+}

@@ -49,7 +49,9 @@ export class ServerService {
   onPlayerMove(): Observable<Room> {
     return this.createObservable<Room>('makeMove')
   }
-
+  onGameNewTurn(): Observable<Room> {
+    return this.createObservable<Room>('newTurn')
+  }
   onPlayerLeft(): Observable<ResponsePlayerLeft> {
     return this.createObservable<ResponsePlayerLeft>('playerLeft')
   }
