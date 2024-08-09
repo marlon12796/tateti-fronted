@@ -1,0 +1,22 @@
+@if(isModalVisible){
+<div class="modal-background" @fadeInOut></div>
+<div class="container">
+  <h2 @slideInFromRight class="container__title">{{ textTitle() }}</h2>
+  <div @slideInFromRight1>
+    @if(roomService.stateGame()==='ESPERANDO_COMPAÑERO'){
+    <div class="dots-container">
+      @for (dot of dots; track $index ) {
+      <div class="dot"></div>
+      }
+    </div>
+    }
+    @if(buttonTitle()!==null){
+    <button class="button" (click)="newTurn()">Nueva partida</button>
+    }
+    <a [routerLink]="['/']" class="boton">Volver al inicio</a>
+  </div>
+  <div @slideInFromRight2>
+    <ng-content select="[pie]"></ng-content>
+  </div>
+</div>
+}

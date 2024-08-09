@@ -1,7 +1,20 @@
 <app-details-game />
 <app-board />
-@if (roomService.stateGame()==='VICTORIA_JUGADOR1'||
-roomService.stateGame()==='VICTORIA_JUGADOR2'||
-roomService.stateGame()==='EMPATE') {
-<button (click)="newTurn()">Próxima ronda</button>
-}
+<app-modal-fullscreen [isModalVisible]="isModalVisible()">
+  @if(isPrivate() && roomService.stateGame()==='ESPERANDO_COMPAÑERO'){
+  <div pie>
+    <p>Copia el link para invitar a un amigo</p>
+    <button class="button-copy" (click)="copyLink()">
+      @if (!isCopyLink()) {
+      <svg viewBox="0 0 448 512">
+        <path fill="#e44848"
+          d="M208 0h124.1A48 48 0 0 1 366 14.1L433.9 82a48 48 0 0 1 14.1 33.9V336a48 48 0 0 1-48 48H208a48 48 0 0 1-48-48V48a48 48 0 0 1 48-48zM48 128h80v64H64v256h192v-32h64v48a48 48 0 0 1-48 48H48a48 48 0 0 1-48-48V176a48 48 0 0 1 48-48z" />
+      </svg>
+      }@else {
+      <span>✓</span>
+      }
+    </button>
+
+  </div>
+  }
+</app-modal-fullscreen>

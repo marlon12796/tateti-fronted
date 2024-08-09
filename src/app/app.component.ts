@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { ButtonsBoxComponent } from './components/buttons-box/buttons-box.component'
 import { ServerService } from './services/server.service'

@@ -11,7 +11,7 @@ export class RoomService {
   private readonly serverService = inject(ServerService)
   readonly player1 = signal<Player>({ health: 0, name: '' })
   readonly player2 = signal<Player>({ health: 0, name: '' })
-  readonly stateGame = signal<GameState>(GameState['WAITING_FOR_PARTNER'])
+  readonly stateGame = signal<GameState>(GameState.WAITING_FOR_PARTNER)
   readonly numberPlayer = signal<PlayerTurn | null>(null)
   readonly board = signal<(PlayerTurn | '')[]>(Array(9).fill(''))
 

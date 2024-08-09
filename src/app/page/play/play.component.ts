@@ -1,22 +1,44 @@
 import { BoardComponent } from '@/app/components/board/board.component'
 import { DetailsGameComponent } from '@/app/components/details-game/details-game.component'
+import { ModalFullscreenComponent } from '@/app/components/modal-fullscreen/modal-fullscreen.component'
+import { GameState, GameStateValues } from '@/app/interfaces/game'
 import { RoomService } from '@/app/services/room.service'
 import { UserService } from '@/app/services/user.service'
-import { Component, inject, input, OnDestroy, OnInit } from '@angular/core'
+import { Component, computed, inject, input, OnDestroy, OnInit, signal } from '@angular/core'
 import { Subscription } from 'rxjs'
 @Component({
   selector: 'app-play',
   standalone: true,
-  imports: [BoardComponent, DetailsGameComponent],
+  imports: [BoardComponent, DetailsGameComponent, ModalFullscreenComponent],
   templateUrl: './play.component.html',
   styleUrl: './play.component.scss'
 })
 export class PlayComponent implements OnInit, OnDestroy {
-  roomService = inject(RoomService)
-  userService = inject(UserService)
-  isPrivate = input()
-  id = input<string>()
+  protected readonly roomService = inject(RoomService)
+  protected readonly userService = inject(UserService)
+  protected readonly isPrivate = input()
+  protected readonly id = input<string>()
+  statesModal: GameStateValues[] = [
+    GameState.VICTORY_PLAYER1,
+    GameState.VICTORY_PLAYER2,
+    GameState.FINAL_VICTORY_PLAYER1,
+    GameState.ABANDONED,
+    GameState.DRAW,
+    GameState.WAITING_FOR_PARTNER
+  ]
+  protected readonly isCopyLink = signal<boolean>(false)
+  protected readonly isModalVisible = computed(() => this.statesModal.includes(this.roomService.stateGame()))
   private subscriptions = new Subscription()
+  async copyLink() {
+    const roomId = this.roomService.getRoomId()
+    const url = `${window.location.href}/${roomId}`
+    try {
+      await navigator.clipboard.writeText(url)
+      this.isCopyLink.set(true)
+    } catch (error) {
+      console.log('error copiando el link', error)
+    }
+  }
   ngOnInit() {
     if (!this.isPrivate() && !this.id()) this.roomService.createRoom('public')
     if (this.isPrivate() && !this.id()) this.roomService.createRoom('private')
@@ -35,8 +57,5 @@ export class PlayComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.roomService.leaveRoom(this.roomService.getRoomId()).catch((error) => console.error('Error al abandonar la sala', error))
     this.subscriptions.unsubscribe()
-  }
-  newTurn() {
-    this.roomService.requestNewTurn()
   }
 }

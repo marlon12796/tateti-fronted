@@ -25,4 +25,6 @@ export const enum GameState {
   FINAL_VICTORY_PLAYER1 = 'VICTORIA_FINAL_JUGADOR1',
   FINAL_VICTORY_PLAYER2 = 'VICTORIA_FINAL_JUGADOR2'
 }
+export type GameStateValues = `${GameState}`
+
 export type BOARD_POSITION = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
