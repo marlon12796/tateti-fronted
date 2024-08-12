@@ -1,7 +1,7 @@
 import { GameState } from '@/app/interfaces/game'
 import { RoomService } from '@/app/services/room.service'
 import { UserService } from '@/app/services/user.service'
-import { animate, style, transition, trigger } from '@angular/animations'
+import { animate, animateChild, query, style, transition, trigger } from '@angular/animations'
 import { Component, computed, inject, Input } from '@angular/core'
 import { RouterModule } from '@angular/router'
 
@@ -12,13 +12,14 @@ import { RouterModule } from '@angular/router'
   templateUrl: './modal-fullscreen.component.html',
   styleUrl: './modal-fullscreen.component.scss',
   animations: [
+    trigger('animateChildren', [transition('* => void', [query('@*', [animateChild()])])]),
     trigger('slideInFromRight', [
       transition(':enter', [style({ translate: '400px', opacity: 0 }), animate('0.5s ease-in-out', style({ translate: '0', opacity: 1 }))]),
       transition(':leave', [style({ translate: '0', opacity: 1 }), animate('0.5s ease-in-out', style({ translate: '-400px', opacity: 0 }))])
     ]),
     trigger('slideInFromRight1', [
-      transition(':enter', [style({ translate: '400px' }), animate('0.5s 0.5s ease-in-out', style({ translate: 0 }))]),
-      transition(':leave', [style({ translate: 0 }), animate('0.5s 0.5s ease-out', style({ translate: '-400px' }))])
+      transition(':enter', [style({ translate: '400px' }), animate('0.5s 0.1s ease-in-out', style({ translate: 0 }))]),
+      transition(':leave', [style({ translate: 0 }), animate('0.5s 0.1s ease-out', style({ translate: '-400px' }))])
     ]),
     trigger('slideInFromRight2', [
       transition(':enter', [style({ translate: '400px' }), animate('0.5s 0.2s ease-in-out', style({ translate: 0 }))]),

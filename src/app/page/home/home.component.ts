@@ -11,9 +11,9 @@ import { Router, RouterLink } from '@angular/router'
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  readonly userService = inject(UserService)
-  readonly roomService = inject(RoomService)
-  router = inject(Router)
+  protected readonly userService = inject(UserService)
+  protected readonly roomService = inject(RoomService)
+  protected readonly router = inject(Router)
   async searchPublicRoom() {
     const room = await this.roomService.searchRoomPublic()
     if (!room?.roomId) return this.router.navigate(['play'])

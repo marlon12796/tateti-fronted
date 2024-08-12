@@ -1,4 +1,5 @@
 @use "./../../../../public/colors.scss";
+@use "../../scss/functions" as f;
 
 .container {
   pointer-events: none;
@@ -37,7 +38,7 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background-color: colors.$accent-2;
-  width: 36px;
+  width: f.px-to-rem(36px);
   display: flex;
   justify-content: center;
 }
@@ -53,14 +54,14 @@
 .x-o-border-container {
   border: 1.5px solid colors.$accent-1-contrast;
   border-radius: 2rem;
-  padding: 5px;
+  padding: f.px-to-em(5px);
   rotate: -45deg;
-  width: 110px;
+  width: f.px-to-rem(110px);
 }
 
 .buttons-start-container {
   margin: auto;
-  height: 100px;
+  height: f.px-to-rem(100px);
   display: flex;
   justify-content: center;
 
@@ -71,11 +72,11 @@
 }
 
 .long-button {
-  width: 80px;
+  width: f.px-to-rem(80px);
   margin: 10px;
-  height: 10px;
+  height: f.px-to-rem(10px);
   rotate: -35deg;
-  border-radius: 2rem;
+  border-radius: f.px-to-em(30px);
   border: 1.5px solid colors.$primary;
   display: flex;
   justify-content: center;
@@ -88,10 +89,12 @@
 }
 
 .speaker-container {
-  width: 80px;
+  width: f.px-to-rem(80px);
   rotate: 45deg;
-  margin-left: auto;
-  margin-top: auto;
+  margin-inline-start: auto;
+  position: absolute;
+  inset-block-end: f.px-to-rem(15px);
+  inset-inline-end: f.px-to-rem(30px);
 
   &>div {
     aspect-ratio: 9;

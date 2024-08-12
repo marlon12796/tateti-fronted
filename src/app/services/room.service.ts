@@ -44,11 +44,13 @@ export class RoomService {
       const res: ResponseCommonRoom = await this.serverService.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
         .emitWithAck('joinRoom', { roomId, playerName: this.serverService.userService.name() })
-      if (res.room.id) {
+      if (res.room && res.room.id) {
         this.serverService.roomId.set(res.room.id)
         this.handleRoomUpdate(res.room)
         this.numberPlayer.set(PlayerTurn['PLAYER_2'])
       }
+      // if (!res.room) {
+      // }
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
@@ -68,13 +70,11 @@ export class RoomService {
   }
   async turnPlayerRoom(boardPosition: BOARD_POSITION) {
     try {
-      const response: ResponseCommonRoom = await this.serverService.server
-        .timeout(CONFIG.SOCKET_TIMEOUT)
-        .emitWithAck('makeMove', {
-          roomId: this.serverService.roomId(),
-          playerPosition: this.numberPlayer(),
-          boardPosition
-        })
+      const response: ResponseCommonRoom = await this.serverService.server.timeout(CONFIG.SOCKET_TIMEOUT).emitWithAck('makeMove', {
+        roomId: this.serverService.roomId(),
+        playerPosition: this.numberPlayer(),
+        boardPosition
+      })
       this.updateRoomState(response.room)
       return response
     } catch (_e) {

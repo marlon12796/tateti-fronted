@@ -25,8 +25,6 @@ export class BoardComponent {
   })
 
   isMyTurn = computed(() => {
-    console.log(this.roomService.stateGame())
-    console.log(this.roomService.numberPlayer())
     const isFirstPlayer =
       this.roomService.stateGame() === GameState['TURN_PLAYER1'] && this.roomService.numberPlayer() === PlayerTurn['PLAYER_1']
     const isSecondPlayer =

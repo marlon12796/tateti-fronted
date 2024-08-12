@@ -5,6 +5,7 @@ import { GameState, GameStateValues } from '@/app/interfaces/game'
 import { RoomService } from '@/app/services/room.service'
 import { UserService } from '@/app/services/user.service'
 import { Component, computed, inject, input, OnDestroy, OnInit, signal } from '@angular/core'
+import { Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 @Component({
   selector: 'app-play',
@@ -18,6 +19,8 @@ export class PlayComponent implements OnInit, OnDestroy {
   protected readonly userService = inject(UserService)
   protected readonly isPrivate = input()
   protected readonly id = input<string>()
+  protected readonly router = inject(Router)
+
   statesModal: GameStateValues[] = [
     GameState.VICTORY_PLAYER1,
     GameState.VICTORY_PLAYER2,
@@ -39,10 +42,13 @@ export class PlayComponent implements OnInit, OnDestroy {
       console.log('error copiando el link', error)
     }
   }
-  ngOnInit() {
+  async ngOnInit() {
     if (!this.isPrivate() && !this.id()) this.roomService.createRoom('public')
     if (this.isPrivate() && !this.id()) this.roomService.createRoom('private')
-    if (this.id()) this.roomService.joinRoom(this.id() ?? '')
+    if (this.id()) {
+      const room = await this.roomService.joinRoom(this.id() ?? '')
+      !room.success && this.router.navigate(['/'])
+    }
 
     const playerJoinedSubscription = this.roomService.onPlayerJoined()
     const playerLeftSubscription = this.roomService.onPlayerLeft()

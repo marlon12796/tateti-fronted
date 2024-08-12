@@ -1,6 +1,6 @@
 @if(isModalVisible){
 <div class="modal-background" @fadeInOut></div>
-<div class="container">
+<div class="container" @animateChildren>
   <h2 @slideInFromRight class="container__title">{{ textTitle() }}</h2>
   <div @slideInFromRight1>
     @if(roomService.stateGame()==='ESPERANDO_COMPAÑERO'){
