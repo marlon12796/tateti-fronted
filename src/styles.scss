@@ -1,10 +1,12 @@
-@use "../public/colors.scss";
+@use "./app/scss/colors.scss";
 // basico por ahora
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 * {
   font-family: "JetBrains Mono", monospace;
   color: colors.$primary;
+  min-width: 0;
+
 }
 
 *,
@@ -22,6 +24,20 @@
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+body {
+  min-height: 100svh;
+}
+
+p {
+  text-wrap: pretty;
+}
 
 a {
   text-decoration: none;

@@ -1,3 +1,4 @@
+import { ButtonComponent } from '@/app/components/button/button.component'
 import { RoomService } from '@/app/services/room.service'
 import { UserService } from '@/app/services/user.service'
 import { Component, inject } from '@angular/core'
@@ -6,7 +7,7 @@ import { Router, RouterLink } from '@angular/router'
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ButtonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

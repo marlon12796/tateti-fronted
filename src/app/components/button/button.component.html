@@ -1,0 +1,9 @@
+@if (type==='button') {
+<button class='shared-button' onclick='clickHandler ? clickHandler() : null'>
+  {{ label }}
+</button>
+} @else{
+<a class='shared-button' [routerLink]='routerLink'>
+  {{ label }}
+</a>
+}

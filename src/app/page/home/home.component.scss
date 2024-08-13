@@ -1,3 +1,49 @@
-a {
-  display: block;
+@use "../../scss/functions" as f;
+
+.home {
+  height: 100%;
+
+  &__container {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+  }
+
+  &__name {
+    font-weight: bold;
+    font-size: x-large;
+  }
+
+  &__paragraph {
+    text-align: center;
+    margin-block-start: 1rem;
+    margin-block-end: 1.5rem;
+  }
+}
+
+.home__title {
+  position: relative;
+  font-size: f.px-to-rem(78px);
+  font-style: italic;
+  text-align: center;
+  letter-spacing: -3px;
+
+  &-separator {
+    display: inline-flex;
+    position: relative;
+
+    &--20 {
+      inset-block-end: -20px;
+    }
+  }
+}
+
+.home__subtitle {
+  font-size: f.px-to-rem(18px);
+  inset-inline: auto 0px;
+  font-weight: 300;
+  inset-block-end: 18px;
+  letter-spacing: 0.02px;
+  translate: 100% 0;
+  position: absolute;
 }

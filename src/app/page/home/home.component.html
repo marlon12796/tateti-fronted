@@ -1,4 +1,16 @@
-<p>{{userService.name()}}</p>
-<button (click)="searchPublicRoom()">Play Online</button>
-<a [routerLink]="['/play-private']">Crear sala privada</a>
-<a [routerLink]="['/change-name']">Cambiar nombre</a>
+<section class="home">
+  <h1 class="home__title">
+    <span class="home__title-separator">TA</span>
+    <span class="home__title-separator home__title-separator--20">TE
+      <span class="home__subtitle">ONLINE</span>
+    </span>
+    <span class="home__title-separator">TI</span>
+
+  </h1>
+  <p class="home__paragraph">¡Hola <span class="home__name">{{userService.name()}}</span>!</p>
+  <div class="home__container">
+    <app-button label="Play Online" type="button" [clickHandler]="searchPublicRoom" />
+    <app-button label="Sala privada" type="link" routerLink="/play-private" />
+    <app-button label="Cambiar nombre" type="link" routerLink="/change-name" />
+  </div>
+</section>
