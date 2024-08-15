@@ -4,11 +4,12 @@ import { UserService } from '@/app/services/user.service'
 import { animate, animateChild, query, style, transition, trigger } from '@angular/animations'
 import { Component, computed, inject, Input } from '@angular/core'
 import { RouterModule } from '@angular/router'
+import { ButtonComponent } from '../button/button.component'
 
 @Component({
   selector: 'app-modal-fullscreen',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ButtonComponent],
   templateUrl: './modal-fullscreen.component.html',
   styleUrl: './modal-fullscreen.component.scss',
   animations: [
@@ -35,16 +36,16 @@ export class ModalFullscreenComponent {
   @Input({ required: true }) isModalVisible = false
   protected roomService = inject(RoomService)
   protected userService = inject(UserService)
-  protected dots: number[] = [1, 2, 3, 4, 5]
+  protected dots: number[] = [1, 2, 3]
   protected readonly textTitle = computed(() => {
     const state = this.roomService.stateGame()
     const titleMap = new Map([
       [GameState.VICTORY_PLAYER1, `Ganó ${this.roomService.player1().name}`],
       [GameState.VICTORY_PLAYER2, `Ganó ${this.roomService.player2().name}`],
-      [GameState.WAITING_FOR_PARTNER, 'Esperando Compañero'],
+      [GameState.WAITING_FOR_PARTNER, 'BUSCANDO COMPAÑERO'],
       [GameState.FINAL_VICTORY_PLAYER1, `Ganó ${this.roomService.player1().name} todas las rondas`],
       [GameState.FINAL_VICTORY_PLAYER2, `Ganó ${this.roomService.player2().name} todas las rondas`],
-      [GameState.ABANDONED, 'El otro jugador ha abandonado la partida']
+      [GameState.ABANDONED, 'El otro jugador ha salido']
     ])
     return titleMap.get(state) || ''
   })
