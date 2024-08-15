@@ -1,11 +1,12 @@
 import { type BOARD_POSITION, GameState, PlayerTurn } from '@/app/interfaces/game'
 import { RoomService } from '@/app/services/room.service'
+import { CommonModule } from '@angular/common'
 import { Component, computed, inject } from '@angular/core'
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss'
 })
@@ -34,5 +35,17 @@ export class BoardComponent {
 
   play(position: BOARD_POSITION) {
     this.roomService.turnPlayerRoom(position)
+  }
+  getMark(player: PlayerTurn | '') {
+    if (player === '') return
+    if (player === PlayerTurn['PLAYER_1']) return 'X'
+    return 'O'
+  }
+  getCellClasses(rowIndex: number, cellIndex: number) {
+    const dynamicClass = 'board__cell--' + (rowIndex * this.boardChunks()[0].length + cellIndex + 1)
+    return {
+      board__cell: true,
+      [dynamicClass]: true
+    }
   }
 }

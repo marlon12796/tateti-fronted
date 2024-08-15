@@ -1,10 +1,11 @@
 import { RoomService } from '@/app/services/room.service'
+import { CommonModule } from '@angular/common'
 import { Component, computed, inject } from '@angular/core'
 
 @Component({
   selector: 'app-details-game',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './details-game.component.html',
   styleUrl: './details-game.component.scss'
 })

@@ -3,3 +3,10 @@
   padding: 0;
   aspect-ratio: 1/1;
 }
+
+.container-play {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto 1fr;
+
+}

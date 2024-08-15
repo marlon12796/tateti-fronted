@@ -9,8 +9,9 @@
   </h1>
   <p class="home__paragraph">¡Hola <span class="home__name">{{userService.name()}}</span>!</p>
   <div class="home__container">
-    <app-button label="Play Online" type="button" [clickHandler]="searchPublicRoom" />
+    <app-button label="Play Online" type="button" (onClick)="searchPublicRoom()" />
     <app-button label="Sala privada" type="link" routerLink="/play-private" />
     <app-button label="Cambiar nombre" type="link" routerLink="/change-name" />
+
   </div>
 </section>

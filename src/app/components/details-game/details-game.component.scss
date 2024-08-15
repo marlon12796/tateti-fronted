@@ -1,0 +1,79 @@
+@use "../../scss/colors.scss";
+@use "../../scss/functions" as f;
+
+.game {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  min-block-size: f.px-to-rem(95px);
+
+  &__mark {
+    display: inline-block;
+    min-inline-size: f.px-to-rem(19.5px);
+    margin: 0 f.px-to-rem(4px);
+    text-align: center;
+  }
+
+  &__player {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    flex-basis: 50%;
+
+  }
+
+  &__paragraph {
+    font-style: italic;
+    text-align: start;
+  }
+
+  &__paragraph--right {
+    text-align: right;
+  }
+
+  &__health {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: colors.$accent-2;
+    font-size: f.px-to-rem(18px);
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    &--right {
+      justify-content: end;
+    }
+  }
+
+}
+
+.state-playing {
+  font-size: f.px-to-rem(20px);
+  text-align: center;
+  margin-block: 0.75rem 1rem;
+  max-inline-size: 14ch;
+  margin-inline: auto;
+
+  &__line {
+    display: block;
+  }
+}
+
+.active {
+
+  &::after,
+  &::before {
+    display: inline-block;
+    position: relative;
+  }
+
+  &::after {
+    content: ")";
+  }
+
+  &::before {
+    content: "(";
+  }
+}
