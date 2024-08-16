@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core'
 import { ServerService } from './server.service'
 import { BOARD_POSITION, GameState, PlayerTurn, type Player, type Room } from '@/app/interfaces/game'
-import type { ResponseCommonRoom, ResponseSearchRoom } from './types/server'
+import type { ResponseCommonRoom, ResponseRoomLeft, ResponseSearchRoom } from './types/server'
 import { CONFIG } from '@/config'
 
 @Injectable({
@@ -18,7 +18,7 @@ export class RoomService {
   async searchRoomPublic(): Promise<ResponseSearchRoom> {
     try {
       const res: ResponseSearchRoom = await this.serverService.server.timeout(CONFIG.SOCKET_TIMEOUT).emitWithAck('searchRoom')
-      console.log(res)
+
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
@@ -44,25 +44,24 @@ export class RoomService {
       const res: ResponseCommonRoom = await this.serverService.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
         .emitWithAck('joinRoom', { roomId, playerName: this.serverService.userService.name() })
+
       if (res.room && res.room.id) {
         this.serverService.roomId.set(res.room.id)
         this.handleRoomUpdate(res.room)
         this.numberPlayer.set(PlayerTurn['PLAYER_2'])
       }
-      // if (!res.room) {
-      // }
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
     }
   }
 
-  async leaveRoom(roomId: Room['id']): Promise<string> {
+  async leaveRoom(roomId: Room['id']) {
     try {
-      const response: string = await this.serverService.server
+      const response: ResponseRoomLeft = await this.serverService.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
-        .emitWithAck('leaveRoom', { roomId, playerName: this.serverService.userService.name() })
-      console.log(response)
+        .emitWithAck('leaveRoom', { roomId, playerName: this.serverService.userService.name(), numberPlayer: this.numberPlayer() })
+      this.updateRoomState(response.room)
       return response
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
@@ -113,6 +112,7 @@ export class RoomService {
   }
   onPlayerLeft() {
     return this.serverService.onPlayerLeft().subscribe((data) => {
+      if (data.numberPlayer === PlayerTurn.PLAYER_1) this.numberPlayer.set(PlayerTurn.PLAYER_1)
       this.handleRoomUpdate(data.room)
     })
   }
@@ -120,6 +120,7 @@ export class RoomService {
     this.player1.set({ health: room.players[0].health, name: room.players[0].name })
     this.player2.set({ health: room.players[1].health, name: room.players[1].name })
     this.stateGame.set(room.state)
+    this.board.set(room.board)
   }
   private updateRoomState(room: Room) {
     this.player1.set(room.players[0])

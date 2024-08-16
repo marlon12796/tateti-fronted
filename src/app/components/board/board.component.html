@@ -2,7 +2,8 @@
   @for (row of boardChunks(); track $index; let rowIndex = $index) {
   <div class="board__row">
     @for (cell of row; track $index; let cellIndex = $index) {
-    <button (click)="play(cell.id)" [disabled]="!isMyTurn()" [ngClass]="getCellClasses(rowIndex, cellIndex)"
+    <button (click)="play(cell.id)" [disabled]="!isMyTurn()||roomService.board()[rowIndex * row.length+ cellIndex]!==''"
+      [ngClass]="getCellClasses(rowIndex, cellIndex)"
       [attr.color-main]="roomService.board()[rowIndex * row.length+ cellIndex]===roomService.numberPlayer()">
       <span class="board__text">{{ getMark(cell.value) }}</span>
     </button>

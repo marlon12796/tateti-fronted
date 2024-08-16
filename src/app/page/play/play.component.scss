@@ -1,12 +1,28 @@
-.button-copy {
-  width: 1.25rem;
-  padding: 0;
-  aspect-ratio: 1/1;
-}
-
 .container-play {
   display: grid;
   height: 100%;
   grid-template-rows: auto 1fr;
+
+}
+
+.pie {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  position: relative;
+  top: 1.5rem;
+
+  &__paragraph {
+    max-width: 26ch;
+    text-align: start;
+  }
+
+  &__button-copy {
+    width: 1.5rem;
+    padding: 0.2em;
+    border: 0;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+  }
 
 }

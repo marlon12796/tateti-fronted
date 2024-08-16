@@ -34,7 +34,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription()
   async copyLink() {
     const roomId = this.roomService.getRoomId()
-    const url = `${window.location.href}/${roomId}`
+    const url = `${window.location.origin}/play/${roomId}`
     try {
       await navigator.clipboard.writeText(url)
       this.isCopyLink.set(true)

@@ -9,7 +9,6 @@
 @mixin grid-center {
   display: grid;
   place-items: center;
-  place-content: center;
 }
 
 .modal-background {
@@ -30,6 +29,7 @@
     font-size: f.px-to-rem(42px);
     font-style: italic;
     text-transform: uppercase;
+    margin-block-start: auto;
   }
 
   &__text {

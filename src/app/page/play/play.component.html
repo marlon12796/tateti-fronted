@@ -3,19 +3,23 @@
   <app-board />
   <app-modal-fullscreen [isModalVisible]="isModalVisible()">
     @if(isPrivate() && roomService.stateGame()==='ESPERANDO_COMPAÑERO'){
-    <div pie>
-      <p>Copia el link para invitar a un amigo</p>
-      <button class="button-copy" (click)="copyLink()">
+    <div pie class="pie">
+      <p class="pie__paragraph">Copia el link para invitar un amigo</p>
+      <button class="pie__button-copy" (click)="copyLink()">
         @if (!isCopyLink()) {
         <svg viewBox="0 0 448 512">
           <path fill="#e44848"
             d="M208 0h124.1A48 48 0 0 1 366 14.1L433.9 82a48 48 0 0 1 14.1 33.9V336a48 48 0 0 1-48 48H208a48 48 0 0 1-48-48V48a48 48 0 0 1 48-48zM48 128h80v64H64v256h192v-32h64v48a48 48 0 0 1-48 48H48a48 48 0 0 1-48-48V176a48 48 0 0 1 48-48z" />
         </svg>
         }@else {
-        <span>✓</span>
+        <span><svg class="checkmark" viewBox="0 0 24 24" style="enable-background: new 0 0 512 512"
+            xml:space="preserve">
+            <path
+              d="M9.7 19.12a1 1 0 0 1-1.4 0l-5.65-5.65a1.5 1.5 0 0 1 0-2.12l.7-.7a1.5 1.5 0 0 1 2.13 0L9 14.17l9.53-9.52a1.5 1.5 0 0 1 2.12 0l.7.7a1.5 1.5 0 0 1 0 2.12z"
+              fill="currentColor" data-original="#000000" />
+          </svg></span>
         }
       </button>
-
     </div>
     }
   </app-modal-fullscreen>

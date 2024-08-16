@@ -45,13 +45,14 @@ export class ModalFullscreenComponent {
       [GameState.WAITING_FOR_PARTNER, 'BUSCANDO COMPAÑERO'],
       [GameState.FINAL_VICTORY_PLAYER1, `Ganó ${this.roomService.player1().name} todas las rondas`],
       [GameState.FINAL_VICTORY_PLAYER2, `Ganó ${this.roomService.player2().name} todas las rondas`],
-      [GameState.ABANDONED, 'El otro jugador ha salido']
+      [GameState.ABANDONED, 'El otro jugador ha salido'],
+      [GameState.DRAW, `Los jugadores empataron`]
     ])
     return titleMap.get(state) || ''
   })
   protected readonly buttonTitle = computed(() => {
     const state = this.roomService.stateGame()
-    const validationVictory = state === GameState.VICTORY_PLAYER1 || state === GameState.VICTORY_PLAYER2
+    const validationVictory = state === GameState.VICTORY_PLAYER1 || state === GameState.VICTORY_PLAYER2 || state === GameState.DRAW
     const validationFinalVictory = state === GameState.FINAL_VICTORY_PLAYER1 || state === GameState.FINAL_VICTORY_PLAYER2
     return validationVictory ? 'Próxima Ronda' : validationFinalVictory ? 'Nueva Partida' : null
   })
