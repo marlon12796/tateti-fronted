@@ -17,6 +17,11 @@ export class ChangeNameComponent {
   profileForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)])
   })
+  ngOnInit() {
+    this.profileForm.patchValue({
+      name: this.userService.name()
+    })
+  }
   changeName() {
     if (!this.profileForm.value.name) return
     this.userService.name.set(this.profileForm.value.name)

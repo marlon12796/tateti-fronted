@@ -1,7 +1,8 @@
 <section class="changeName">
   <form [formGroup]="profileForm" (ngSubmit)="changeName()" class="form">
     <label for="name" class="form__label">ESCRIBE TÚ NOMBRE</label>
-    <input type="text" id="name" formControlName="name" [value]="userService.name()" class="form__input" />
+    <input type="text" id="name" formControlName="name" [value]="userService.name()" defaultValue="marlon"
+      class="form__input" />
     <app-button label="Cambiar Nombre" type="button" [disabled]="!profileForm.valid" class="form__button" />
   </form>
   <app-button label="Volver" type="link" routerLink="/" class="changeName__link" />

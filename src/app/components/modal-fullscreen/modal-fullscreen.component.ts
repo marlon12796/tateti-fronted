@@ -43,8 +43,8 @@ export class ModalFullscreenComponent {
       [GameState.VICTORY_PLAYER1, `Ganó ${this.roomService.player1().name}`],
       [GameState.VICTORY_PLAYER2, `Ganó ${this.roomService.player2().name}`],
       [GameState.WAITING_FOR_PARTNER, 'BUSCANDO COMPAÑERO'],
-      [GameState.FINAL_VICTORY_PLAYER1, `Ganó ${this.roomService.player1().name} todas las rondas`],
-      [GameState.FINAL_VICTORY_PLAYER2, `Ganó ${this.roomService.player2().name} todas las rondas`],
+      [GameState.FINAL_VICTORY_PLAYER1, `El ganador final es ${this.roomService.player1().name}`],
+      [GameState.FINAL_VICTORY_PLAYER2, `El ganador final es ${this.roomService.player2().name}`],
       [GameState.ABANDONED, 'El otro jugador ha salido'],
       [GameState.DRAW, `Los jugadores empataron`]
     ])

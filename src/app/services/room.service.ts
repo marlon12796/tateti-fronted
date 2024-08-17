@@ -61,6 +61,7 @@ export class RoomService {
       const response: ResponseRoomLeft = await this.serverService.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
         .emitWithAck('leaveRoom', { roomId, playerName: this.serverService.userService.name(), numberPlayer: this.numberPlayer() })
+
       this.updateRoomState(response.room)
       return response
     } catch (_e) {
@@ -112,6 +113,7 @@ export class RoomService {
   }
   onPlayerLeft() {
     return this.serverService.onPlayerLeft().subscribe((data) => {
+      console.log('leftead', data.room)
       if (data.numberPlayer === PlayerTurn.PLAYER_1) this.numberPlayer.set(PlayerTurn.PLAYER_1)
       this.handleRoomUpdate(data.room)
     })

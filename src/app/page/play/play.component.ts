@@ -26,6 +26,7 @@ export class PlayComponent implements OnInit, OnDestroy {
     GameState.VICTORY_PLAYER1,
     GameState.VICTORY_PLAYER2,
     GameState.FINAL_VICTORY_PLAYER1,
+    GameState.FINAL_VICTORY_PLAYER2,
     GameState.ABANDONED,
     GameState.DRAW,
     GameState.WAITING_FOR_PARTNER
