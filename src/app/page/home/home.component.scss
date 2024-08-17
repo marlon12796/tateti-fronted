@@ -2,11 +2,13 @@
 
 .home {
   height: 100%;
+  display: grid;
+  place-content: center;
 
   &__container {
     display: grid;
     justify-items: center;
-    gap: 0.5rem;
+    gap: f.px-to-rem(10px);
   }
 
   &__name {
@@ -35,6 +37,13 @@
 
     &--20 {
       inset-block-end: -20px;
+    }
+  }
+
+  @container (width<=22rem) {
+    & {
+      font-size: f.px-to-rem(64px);
+
     }
   }
 }

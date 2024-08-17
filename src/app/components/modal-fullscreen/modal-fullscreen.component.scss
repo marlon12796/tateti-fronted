@@ -6,9 +6,12 @@
   align-items: center;
 }
 
-@mixin grid-center {
-  display: grid;
-  place-items: center;
+@mixin flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.2em;
 }
 
 .modal-background {
@@ -21,7 +24,7 @@
 .container {
   position: absolute;
   inset: 0;
-  @include grid-center;
+  @include flex;
 
   &__title {
     text-align: center;
@@ -29,7 +32,6 @@
     font-size: f.px-to-rem(42px);
     font-style: italic;
     text-transform: uppercase;
-    margin-block-start: auto;
   }
 
   &__text {

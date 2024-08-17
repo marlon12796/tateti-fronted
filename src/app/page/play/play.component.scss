@@ -7,13 +7,12 @@
 
 .pie {
   display: flex;
-  gap: 0.7rem;
   align-items: center;
   position: relative;
-  top: 1.5rem;
+  top: 3rem;
 
   &__paragraph {
-    max-width: 26ch;
+    max-width: 27ch;
     text-align: start;
   }
 

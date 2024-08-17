@@ -7,6 +7,10 @@ $borde: 2px solid colors.$primary;
   display: grid;
   align-items: center;
   grid-template-rows: repeat(3, 1fr);
+  position: relative;
+  transform: translateY(-50%);
+  inset-block-start: 50%;
+  max-block-size: f.px-to-rem(290px);
 
   &__row {
     flex-grow: 1;

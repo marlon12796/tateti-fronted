@@ -41,11 +41,13 @@
   width: f.px-to-rem(36px);
   display: flex;
   justify-content: center;
+
+  &__pressed {
+
+    translate: 0 40px;
+  }
 }
 
-.round-button__pressed {
-  translate: 0 40px;
-}
 
 .x-o-container {
   translate: 0 40px;
@@ -80,12 +82,12 @@
   border: 1.5px solid colors.$primary;
   display: flex;
   justify-content: center;
-}
 
-.long-button__pressed {
-  translate: 0 14px;
-  font-size: smaller;
-  font-weight: bold;
+  &__pressed {
+    translate: 0 14px;
+    font-size: smaller;
+    font-weight: bold;
+  }
 }
 
 .speaker-container {
@@ -102,4 +104,11 @@
     border-radius: 2rem;
     border: 1.5px solid colors.$primary;
   }
+}
+
+@media(height<=40em) {
+  .main-pad {
+    display: none;
+  }
+
 }

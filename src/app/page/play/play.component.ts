@@ -4,6 +4,7 @@ import { ModalFullscreenComponent } from '@/app/components/modal-fullscreen/moda
 import { GameState, GameStateValues } from '@/app/interfaces/game'
 import { RoomService } from '@/app/services/room.service'
 import { UserService } from '@/app/services/user.service'
+import { Location } from '@angular/common'
 import { Component, computed, inject, input, OnDestroy, OnInit, signal } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs'
@@ -20,7 +21,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   protected readonly isPrivate = input()
   protected readonly id = input<string>()
   protected readonly router = inject(Router)
-
+  protected readonly location = inject(Location)
   statesModal: GameStateValues[] = [
     GameState.VICTORY_PLAYER1,
     GameState.VICTORY_PLAYER2,
@@ -43,6 +44,7 @@ export class PlayComponent implements OnInit, OnDestroy {
     }
   }
   async ngOnInit() {
+    this.location.replaceState('play')
     if (!this.isPrivate() && !this.id()) this.roomService.createRoom('public')
     if (this.isPrivate() && !this.id()) this.roomService.createRoom('private')
     if (this.id()) {
