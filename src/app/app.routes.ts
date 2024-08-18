@@ -1,16 +1,31 @@
-import type { Routes } from "@angular/router";
-import { HomeComponent } from "./page/home/home.component";
-import { PlayComponent } from "./page/play/play.component";
-import { ChangeNameComponent } from "./page/change-name/change-name.component";
-import { requireNameGuard } from "./guards/require-name.guard";
+import type { Routes } from '@angular/router'
+import { PlayComponent } from './page/play/play.component'
+import { requireNameGuard } from './guards/require-name.guard'
 
 export const routes: Routes = [
-	{ path: "", component: HomeComponent, canActivate: [requireNameGuard] },
-	{ path: "play", component: PlayComponent, canActivate: [requireNameGuard] },
-	{ path: "play-private",component: PlayComponent, canActivate: [requireNameGuard], data: { isPrivate: true } },
-	 {
-    path: "play/:id",
- component: PlayComponent, canActivate: [requireNameGuard]
+  {
+    path: '',
+    loadComponent: () => import('./page/home/home.component').then((page) => page.HomeComponent),
+    canActivate: [requireNameGuard]
   },
-	{ path: "change-name", component: ChangeNameComponent },
-];
+  {
+    path: 'play',
+    loadComponent: () => import('./page/play/play.component').then((page) => page.PlayComponent),
+    canActivate: [requireNameGuard]
+  },
+  {
+    path: 'play-private',
+    loadComponent: () => import('./page/play/play.component').then((page) => page.PlayComponent),
+    canActivate: [requireNameGuard],
+    data: { isPrivate: true }
+  },
+  {
+    path: 'play/:id',
+    loadComponent: () => import('./page/play/play.component').then((page) => page.PlayComponent),
+    canActivate: [requireNameGuard]
+  },
+  {
+    path: 'change-name',
+    loadComponent: () => import('./page/change-name/change-name.component').then((page) => page.ChangeNameComponent)
+  }
+]

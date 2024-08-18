@@ -1,6 +1,6 @@
 import { ButtonComponent } from '@/app/components/button/button.component'
 import { UserService } from '@/app/services/user.service'
-import { Component, inject, Input } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Router, RouterLink, RouterModule } from '@angular/router'
 
