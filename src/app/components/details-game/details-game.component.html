@@ -2,7 +2,11 @@
   <div class="game__player">
     <div class="game__top">
       <span class="game__health">
+        @if (!roomService.player1().name) {
+        <span class="game__health">❤️❤️❤️</span>
+        } @if(roomService.player1().name){
         @for(vida of healthPlayer1(); track $index){❤️}
+        }
       </span>
       <span class="game__mark" [ngClass]="{ active: roomService.stateGame() === 'TURNO_JUGADOR1' }">X</span>
     </div>
@@ -14,8 +18,9 @@
       <span class="game__health">
         @if (!roomService.player2().name) {
         <span class="game__health">💙💙💙</span>
-        } @if(roomService.player2().name){ @for(vida of healthPlayer2(); track
-        $index){💙} }
+        } @if(roomService.player2().name){
+        @for(vida of healthPlayer2(); track $index){💙}
+        }
       </span>
     </div>
     <p class="game__paragraph game__paragraph--right">

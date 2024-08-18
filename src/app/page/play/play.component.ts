@@ -1,6 +1,7 @@
 import { BoardComponent } from '@/app/components/board/board.component'
 import { DetailsGameComponent } from '@/app/components/details-game/details-game.component'
 import { ModalFullscreenComponent } from '@/app/components/modal-fullscreen/modal-fullscreen.component'
+import { SvgModalComponent } from '@/app/components/svg-modal/svg-modal.component'
 import { GameState, GameStateValues } from '@/app/interfaces/game'
 import { RoomService } from '@/app/services/room.service'
 import { UserService } from '@/app/services/user.service'
@@ -11,7 +12,7 @@ import { Subscription } from 'rxjs'
 @Component({
   selector: 'app-play',
   standalone: true,
-  imports: [BoardComponent, DetailsGameComponent, ModalFullscreenComponent],
+  imports: [BoardComponent, DetailsGameComponent, ModalFullscreenComponent, SvgModalComponent],
   templateUrl: './play.component.html',
   styleUrl: './play.component.scss'
 })

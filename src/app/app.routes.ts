@@ -1,5 +1,4 @@
 import type { Routes } from '@angular/router'
-import { PlayComponent } from './page/play/play.component'
 import { requireNameGuard } from './guards/require-name.guard'
 
 export const routes: Routes = [
