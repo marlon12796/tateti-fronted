@@ -8,9 +8,9 @@
       <p class="pie__paragraph">Copia el link para invitar un amigo</p>
       <button class="pie__button-copy" (click)="copyLink()">
         @if (!isCopyLink()) {
-        <span><app-svg-modal type="copy" /></span>
+        <app-svg-modal type="copy" />
         }@else {
-        <span><app-svg-modal type="checkmark" /></span>
+        <app-svg-modal type="checkmark" />
         }
       </button>
     </div>
