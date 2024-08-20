@@ -8,8 +8,12 @@
     }
   </h2>
   <div @slideInFromRight1>
-    @if(buttonTitle()!==null){
-    <app-button label="Nueva partida" type="button" (onClick)="newTurn()" />
+    @if(buttonTitle()){
+    <app-button [label]="buttonTitle()" type="button" (onClick)="newTurn()" />
+    }
+    @if(isReturnButtonVisible()){
+    <app-button label="Menú Principal" type="link" routerLink="/" />
+
     }
   </div>
   <div @slideInFromRight2>

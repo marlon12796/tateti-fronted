@@ -11,8 +11,8 @@ import { RouterLink } from '@angular/router'
 export class ButtonComponent {
   @Output() onClick = new EventEmitter<void>()
   @Input() disabled?: boolean = false
+  @Input() label: string = ''
   constructor(
-    @Attribute('label') protected readonly label: string,
     @Attribute('type') protected readonly type: 'button' | 'link',
     @Attribute('routerLink') protected readonly routerLink?: string
   ) {}

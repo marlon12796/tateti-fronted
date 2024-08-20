@@ -18,7 +18,6 @@ export class RoomService {
   async searchRoomPublic(): Promise<ResponseSearchRoom> {
     try {
       const res: ResponseSearchRoom = await this.serverService.server.timeout(CONFIG.SOCKET_TIMEOUT).emitWithAck('searchRoom')
-
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')

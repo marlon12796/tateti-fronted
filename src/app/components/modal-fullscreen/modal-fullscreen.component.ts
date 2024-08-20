@@ -43,6 +43,10 @@ export class ModalFullscreenComponent {
   protected roomService = inject(RoomService)
   protected userService = inject(UserService)
   protected dots: number[] = [1, 2, 3]
+  protected readonly isReturnButtonVisible = computed(() => {
+    const isReturn = [GameState.WAITING_FOR_PARTNER, GameState.ABANDONED].includes(this.roomService.stateGame())
+    return isReturn
+  })
   protected readonly textTitle = computed(() => {
     const state = this.roomService.stateGame()
     const titleMap = new Map([
@@ -60,7 +64,8 @@ export class ModalFullscreenComponent {
     const state = this.roomService.stateGame()
     const validationVictory = state === GameState.VICTORY_PLAYER1 || state === GameState.VICTORY_PLAYER2 || state === GameState.DRAW
     const validationFinalVictory = state === GameState.FINAL_VICTORY_PLAYER1 || state === GameState.FINAL_VICTORY_PLAYER2
-    return validationVictory ? 'Próxima Ronda' : validationFinalVictory ? 'Nueva Partida' : null
+
+    return validationVictory ? 'Próxima Ronda' : validationFinalVictory ? 'Nueva Partida' : ''
   })
   constructor() {
     effect(async (onCleanup) => {
@@ -83,6 +88,7 @@ export class ModalFullscreenComponent {
   }
 
   newTurn() {
+    console.log(this.roomService.stateGame())
     this.roomService.requestNewTurn()
   }
 }

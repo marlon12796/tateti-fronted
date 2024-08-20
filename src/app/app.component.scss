@@ -14,6 +14,7 @@ $padding-console: 13px;
   position: relative;
   grid-template-rows: 1fr auto 32%;
   container-type: inline-size;
+  margin-inline: auto;
 
   &__screen {
     background-color: colors.$background;
