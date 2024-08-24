@@ -8,6 +8,7 @@ export interface Room {
   players: [Player, Player]
   state: GameState
   board: (PlayerTurn | '')[]
+  votes: PlayerTurn[]
   playerTurn: PlayerTurn
 }
 export enum PlayerTurn {
@@ -23,7 +24,8 @@ export const enum GameState {
   VICTORY_PLAYER2 = 'VICTORIA_JUGADOR2',
   ABANDONED = 'ABANDONADO',
   FINAL_VICTORY_PLAYER1 = 'VICTORIA_FINAL_JUGADOR1',
-  FINAL_VICTORY_PLAYER2 = 'VICTORIA_FINAL_JUGADOR2'
+  FINAL_VICTORY_PLAYER2 = 'VICTORIA_FINAL_JUGADOR2',
+  VOTING_FOR_NEW_GAME = 'VOTANDO_POR_NUEVA_PARTIDA'
 }
 export type GameStateValues = `${GameState}`
 

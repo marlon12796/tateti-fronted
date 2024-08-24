@@ -14,6 +14,7 @@ export class RoomService {
   readonly stateGame = signal<GameState>(GameState.WAITING_FOR_PARTNER)
   readonly numberPlayer = signal<PlayerTurn | null>(null)
   readonly board = signal<(PlayerTurn | '')[]>(Array(9).fill(''))
+  readonly isVotingForNewRoom = signal<boolean>(false)
 
   async searchRoomPublic(): Promise<ResponseSearchRoom> {
     try {
@@ -91,6 +92,18 @@ export class RoomService {
       throw new Error('Error al conectar con el evento de solicitud de nuevo turno')
     }
   }
+  async voteForNewGame() {
+    try {
+      const response: ResponseCommonRoom = await this.serverService.server
+        .timeout(CONFIG.SOCKET_TIMEOUT)
+        .emitWithAck('voteForNewGame', { roomId: this.serverService.roomId(), numberPlayer: this.numberPlayer() })
+
+      this.isVotingForNewRoom.set(true)
+      return response
+    } catch (_e) {
+      throw new Error('Error al conectar con el evento de solicitud de nuevo juego')
+    }
+  }
   getRoomId() {
     return this.serverService.roomId()
   }
@@ -110,9 +123,14 @@ export class RoomService {
       this.updateRoomState(room)
     })
   }
+  onVoteForNewGame() {
+    this.serverService.onVoteForNewRoom().subscribe((room) => {
+      room.votes.length === 1 && this.isVotingForNewRoom.set(true)
+      room.votes.length === 0 && this.isVotingForNewRoom.set(false)
+    })
+  }
   onPlayerLeft() {
     return this.serverService.onPlayerLeft().subscribe((data) => {
-      console.log('leftead', data.room)
       if (data.numberPlayer === PlayerTurn.PLAYER_1) this.numberPlayer.set(PlayerTurn.PLAYER_1)
       this.handleRoomUpdate(data.room)
     })

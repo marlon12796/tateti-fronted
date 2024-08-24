@@ -58,14 +58,16 @@ export class PlayComponent implements OnInit, OnDestroy {
     const playerLeftSubscription = this.roomService.onPlayerLeft()
     const playerMoveSubscription = this.roomService.onPlayerMove()
     const gameNewTurnSubscription = this.roomService.onGameNewTurn()
+    const voteForNewGame = this.roomService.onVoteForNewGame()
 
     this.subscriptions.add(playerJoinedSubscription)
     this.subscriptions.add(playerMoveSubscription)
     this.subscriptions.add(playerLeftSubscription)
     this.subscriptions.add(gameNewTurnSubscription)
+    this.subscriptions.add(voteForNewGame)
   }
   ngOnDestroy() {
-    this.roomService.leaveRoom(this.roomService.getRoomId()).catch((error) => console.error('Error al abandonar la sala', error))
+    this.roomService.leaveRoom(this.roomService.getRoomId())
     this.subscriptions.unsubscribe()
   }
 }

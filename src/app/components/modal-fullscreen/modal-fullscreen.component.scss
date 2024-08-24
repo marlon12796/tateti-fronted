@@ -31,7 +31,13 @@
     max-width: 22ch;
     font-size: f.px-to-rem(42px);
     font-style: italic;
+    position: relative;
     text-transform: uppercase;
+  }
+
+  &__buttons {
+    display: grid;
+    gap: 0.5rem
   }
 
   &__text {
@@ -47,6 +53,8 @@
   background: radial-gradient(circle closest-side, colors.$primary 90%, #0000) 0 / calc(100% / 3) 100% space;
   clip-path: inset(0 100% 0 0);
   animation: l1 1s steps(4) infinite;
+  position: absolute;
+  inset-block-end: f.px-to-rem(12px);
 }
 
 @keyframes l1 {

@@ -44,7 +44,13 @@ export class ModalFullscreenComponent {
   protected userService = inject(UserService)
   protected dots: number[] = [1, 2, 3]
   protected readonly isReturnButtonVisible = computed(() => {
-    const isReturn = [GameState.WAITING_FOR_PARTNER, GameState.ABANDONED].includes(this.roomService.stateGame())
+    const isReturn = [
+      GameState.WAITING_FOR_PARTNER,
+      GameState.ABANDONED,
+      GameState.FINAL_VICTORY_PLAYER1,
+      GameState.FINAL_VICTORY_PLAYER2,
+      GameState.VOTING_FOR_NEW_GAME
+    ].includes(this.roomService.stateGame())
     return isReturn
   })
   protected readonly textTitle = computed(() => {
@@ -53,8 +59,8 @@ export class ModalFullscreenComponent {
       [GameState.VICTORY_PLAYER1, `Ganó ${this.roomService.player1().name}`],
       [GameState.VICTORY_PLAYER2, `Ganó ${this.roomService.player2().name}`],
       [GameState.WAITING_FOR_PARTNER, 'BUSCANDO COMPAÑERO'],
-      [GameState.FINAL_VICTORY_PLAYER1, `El ganador final es ${this.roomService.player1().name}`],
-      [GameState.FINAL_VICTORY_PLAYER2, `El ganador final es ${this.roomService.player2().name}`],
+      [GameState.FINAL_VICTORY_PLAYER1, `Ganador Final ${this.roomService.player1().name}`],
+      [GameState.FINAL_VICTORY_PLAYER2, `Ganador Final ${this.roomService.player2().name}`],
       [GameState.ABANDONED, 'El otro jugador ha salido'],
       [GameState.DRAW, `Los jugadores empataron`]
     ])
@@ -87,8 +93,13 @@ export class ModalFullscreenComponent {
     })
   }
 
-  newTurn() {
-    console.log(this.roomService.stateGame())
-    this.roomService.requestNewTurn()
+  executeGameAction() {
+    const STATESFORVOTES: [GameState, GameState] = [GameState.FINAL_VICTORY_PLAYER1, GameState.FINAL_VICTORY_PLAYER2]
+    const isFinalVictory = STATESFORVOTES.includes(this.roomService.stateGame())
+    if (isFinalVictory) {
+      this.roomService.voteForNewGame()
+    } else {
+      this.roomService.requestNewTurn()
+    }
   }
 }

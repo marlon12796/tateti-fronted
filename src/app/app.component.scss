@@ -6,7 +6,7 @@ $padding-console: 13px;
 
 .main-game {
   background-color: colors.$accent-1;
-  max-width: 30rem;
+  max-inline-size: 32rem;
   border-radius: f.px-to-em(40px);
   padding: f.px-to-em($border-radius-base + $padding-console);
   height: 100svh;

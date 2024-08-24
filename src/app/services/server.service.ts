@@ -43,16 +43,19 @@ export class ServerService {
       }
     })
   }
-  onPlayerJoined(): Observable<ResponsePlayerJoined> {
+  onPlayerJoined() {
     return this.createObservable<ResponsePlayerJoined>('playerJoined')
   }
-  onPlayerMove(): Observable<Room> {
+  onPlayerMove() {
     return this.createObservable<Room>('makeMove')
   }
-  onGameNewTurn(): Observable<Room> {
+  onGameNewTurn() {
     return this.createObservable<Room>('newTurn')
   }
-  onPlayerLeft(): Observable<ResponsePlayerLeft> {
+  onVoteForNewRoom() {
+    return this.createObservable<Room>('voteForNewRoom')
+  }
+  onPlayerLeft() {
     return this.createObservable<ResponsePlayerLeft>('playerLeft')
   }
 }

@@ -7,9 +7,9 @@
     <div class="loader"></div>
     }
   </h2>
-  <div @slideInFromRight1>
+  <div @slideInFromRight1 class="container__buttons">
     @if(buttonTitle()){
-    <app-button [label]="buttonTitle()" type="button" (onClick)="newTurn()" />
+    <app-button [label]="buttonTitle()" type="button" (onClick)="executeGameAction()" />
     }
     @if(isReturnButtonVisible()){
     <app-button label="Menú Principal" type="link" routerLink="/" />
