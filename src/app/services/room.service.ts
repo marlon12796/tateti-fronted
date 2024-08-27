@@ -14,11 +14,13 @@ export class RoomService {
   readonly stateGame = signal<GameState>(GameState.WAITING_FOR_PARTNER)
   readonly numberPlayer = signal<PlayerTurn | null>(null)
   readonly board = signal<(PlayerTurn | '')[]>(Array(9).fill(''))
-  readonly isVotingForNewRoom = signal<boolean>(false)
+  readonly isPlayerVotingForNewGame = signal<boolean>(false)
 
   async searchRoomPublic(): Promise<ResponseSearchRoom> {
     try {
-      const res: ResponseSearchRoom = await this.serverService.server.timeout(CONFIG.SOCKET_TIMEOUT).emitWithAck('searchRoom')
+      const res: ResponseSearchRoom = await this.serverService.server
+        .timeout(CONFIG.SOCKET_TIMEOUT)
+        .emitWithAck('searchRoom')
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
@@ -32,7 +34,7 @@ export class RoomService {
         .emitWithAck('createRoom', { type, player: this.serverService.userService.name() })
       this.serverService.roomId.set(res.room.id)
       this.numberPlayer.set(PlayerTurn['PLAYER_1'])
-      this.handleRoomUpdate(res.room)
+      this.updateRoomState(res.room)
       return res
     } catch (_e) {
       throw new Error('Error al conectar con el evento')
@@ -47,7 +49,7 @@ export class RoomService {
 
       if (res.room && res.room.id) {
         this.serverService.roomId.set(res.room.id)
-        this.handleRoomUpdate(res.room)
+        this.updateRoomState(res.room)
         this.numberPlayer.set(PlayerTurn['PLAYER_2'])
       }
       return res
@@ -60,7 +62,11 @@ export class RoomService {
     try {
       const response: ResponseRoomLeft = await this.serverService.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
-        .emitWithAck('leaveRoom', { roomId, playerName: this.serverService.userService.name(), numberPlayer: this.numberPlayer() })
+        .emitWithAck('leaveRoom', {
+          roomId,
+          playerName: this.serverService.userService.name(),
+          numberPlayer: this.numberPlayer()
+        })
 
       this.updateRoomState(response.room)
       return response
@@ -70,11 +76,13 @@ export class RoomService {
   }
   async turnPlayerRoom(boardPosition: BOARD_POSITION) {
     try {
-      const response: ResponseCommonRoom = await this.serverService.server.timeout(CONFIG.SOCKET_TIMEOUT).emitWithAck('makeMove', {
-        roomId: this.serverService.roomId(),
-        playerPosition: this.numberPlayer(),
-        boardPosition
-      })
+      const response: ResponseCommonRoom = await this.serverService.server
+        .timeout(CONFIG.SOCKET_TIMEOUT)
+        .emitWithAck('makeMove', {
+          roomId: this.serverService.roomId(),
+          playerPosition: this.numberPlayer(),
+          boardPosition
+        })
       this.updateRoomState(response.room)
       return response
     } catch (_e) {
@@ -94,13 +102,16 @@ export class RoomService {
   }
   async voteForNewGame() {
     try {
+      this.isPlayerVotingForNewGame.set(true)
       const response: ResponseCommonRoom = await this.serverService.server
         .timeout(CONFIG.SOCKET_TIMEOUT)
         .emitWithAck('voteForNewGame', { roomId: this.serverService.roomId(), numberPlayer: this.numberPlayer() })
+      response.room.state !== GameState.VOTING_FOR_NEW_GAME && this.isPlayerVotingForNewGame.set(false)
+      this.updateRoomState(response.room)
 
-      this.isVotingForNewRoom.set(true)
       return response
     } catch (_e) {
+      // this.isPlayerVotingForNewGame.set(false)
       throw new Error('Error al conectar con el evento de solicitud de nuevo juego')
     }
   }
@@ -110,7 +121,7 @@ export class RoomService {
 
   onPlayerJoined() {
     return this.serverService.onPlayerJoined().subscribe((data) => {
-      this.handleRoomUpdate(data.room)
+      this.updateRoomState(data.room)
     })
   }
   onPlayerMove() {
@@ -124,23 +135,18 @@ export class RoomService {
     })
   }
   onVoteForNewGame() {
-    this.serverService.onVoteForNewRoom().subscribe((room) => {
-      room.votes.length === 1 && this.isVotingForNewRoom.set(true)
-      room.votes.length === 0 && this.isVotingForNewRoom.set(false)
+    this.serverService.onVoteForNewGame().subscribe((room) => {
+      this.updateRoomState(room)
+      this.isPlayerVotingForNewGame.set(false)
     })
   }
   onPlayerLeft() {
     return this.serverService.onPlayerLeft().subscribe((data) => {
       if (data.numberPlayer === PlayerTurn.PLAYER_1) this.numberPlayer.set(PlayerTurn.PLAYER_1)
-      this.handleRoomUpdate(data.room)
+      this.updateRoomState(data.room)
     })
   }
-  private handleRoomUpdate(room: Room) {
-    this.player1.set({ health: room.players[0].health, name: room.players[0].name })
-    this.player2.set({ health: room.players[1].health, name: room.players[1].name })
-    this.stateGame.set(room.state)
-    this.board.set(room.board)
-  }
+
   private updateRoomState(room: Room) {
     this.player1.set(room.players[0])
     this.player2.set(room.players[1])

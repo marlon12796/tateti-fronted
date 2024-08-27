@@ -6,7 +6,7 @@
 		"indentStyle": "space",
 		"indentWidth": 2,
 		"lineEnding": "lf",
-		"lineWidth": 135,
+		"lineWidth": 125,
 		"attributePosition": "auto"
 	},
 	"organizeImports": {

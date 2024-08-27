@@ -1,13 +1,13 @@
 @if(isModalVisible){
 <div class="modal-background" @fadeInOut></div>
-<div class="container" @animateChildren>
-  <h2 @slideInFromRight class="container__title">
+<div class="container" @slideInFromRight>
+  <h2 class="animate container__title">
     <span class="container__text">{{ textTitle() }}</span>
     @if(roomService.stateGame()==='ESPERANDO_COMPAÑERO'){
     <div class="loader"></div>
     }
   </h2>
-  <div @slideInFromRight1 class="container__buttons">
+  <div class="animate-2 container__buttons">
     @if(buttonTitle()){
     <app-button [label]="buttonTitle()" type="button" (onClick)="executeGameAction()" />
     }
@@ -16,7 +16,8 @@
 
     }
   </div>
-  <div @slideInFromRight2>
+
+  <div class="animate-2">
     <ng-content select="[pie]"></ng-content>
   </div>
 </div>

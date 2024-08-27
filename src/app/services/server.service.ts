@@ -52,8 +52,8 @@ export class ServerService {
   onGameNewTurn() {
     return this.createObservable<Room>('newTurn')
   }
-  onVoteForNewRoom() {
-    return this.createObservable<Room>('voteForNewRoom')
+  onVoteForNewGame() {
+    return this.createObservable<Room>('voteForNewGame')
   }
   onPlayerLeft() {
     return this.createObservable<ResponsePlayerLeft>('playerLeft')

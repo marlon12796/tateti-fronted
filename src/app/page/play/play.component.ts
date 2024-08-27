@@ -30,7 +30,8 @@ export class PlayComponent implements OnInit, OnDestroy {
     GameState.FINAL_VICTORY_PLAYER2,
     GameState.ABANDONED,
     GameState.DRAW,
-    GameState.WAITING_FOR_PARTNER
+    GameState.WAITING_FOR_PARTNER,
+    GameState.VOTING_FOR_NEW_GAME
   ]
   protected readonly isCopyLink = signal<boolean>(false)
   protected readonly isModalVisible = computed(() => this.statesModal.includes(this.roomService.stateGame()))
