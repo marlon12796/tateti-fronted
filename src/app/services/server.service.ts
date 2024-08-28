@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core'
 import { io, type Socket } from 'socket.io-client'
 import { UserService } from './user.service'
-import type { ResponsePlayerLeft, ResponsePlayerJoined, ResponsePlayerTurn } from './types/server'
+import type { ResponsePlayerLeft, ResponsePlayerJoined } from './types/server'
 import { Observable } from 'rxjs'
 import { Room } from '../interfaces/game'
 

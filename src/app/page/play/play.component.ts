@@ -6,7 +6,7 @@ import { GameState, GameStateValues } from '@/app/interfaces/game'
 import { RoomService } from '@/app/services/room.service'
 import { UserService } from '@/app/services/user.service'
 import { Location } from '@angular/common'
-import { Component, computed, inject, input, OnDestroy, OnInit, signal } from '@angular/core'
+import { Component, computed, HostListener, inject, input, OnDestroy, OnInit, signal } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 @Component({
@@ -68,6 +68,13 @@ export class PlayComponent implements OnInit, OnDestroy {
     this.subscriptions.add(voteForNewGame)
   }
   ngOnDestroy() {
+    this.cleanup()
+  }
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification() {
+    this.cleanup()
+  }
+  private cleanup(): void {
     this.roomService.leaveRoom(this.roomService.getRoomId())
     this.subscriptions.unsubscribe()
   }

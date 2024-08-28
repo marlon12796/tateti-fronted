@@ -1,9 +1,10 @@
 <section class="changeName">
   <form [formGroup]="profileForm" (ngSubmit)="changeName()" class="form">
     <label for="name" class="form__label">ESCRIBE TÚ NOMBRE</label>
-    <input type="text" id="name" formControlName="name" [value]="userService.name()" defaultValue="marlon"
-      class="form__input" />
-    <app-button label="Cambiar Nombre" type="button" [disabled]="!profileForm.valid" class="form__button" />
+    <input type="text" id="name" formControlName="name" [value]="userService.name()" maxlength="10"
+      defaultValue="marlon" class="form__input" [@wobble]="wobbleField() && profileForm.invalid"
+      (@wobble.done)="wobbleField.set(false)" (@wobble.start)="onWobbleStart($event)" />
+    <app-button label="Cambiar Nombre" type="button" class="form__button" [class.disabled]="!profileForm.valid" />
   </form>
   <app-button label="Volver" type="link" routerLink="/" class="changeName__link" />
 
