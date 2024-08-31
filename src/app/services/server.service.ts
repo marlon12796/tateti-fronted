@@ -4,6 +4,7 @@ import { UserService } from './user.service'
 import type { ResponsePlayerLeft, ResponsePlayerJoined } from './types/server'
 import { Observable } from 'rxjs'
 import { Room } from '../interfaces/game'
+import { environment } from '@/environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ServerService {
   roomId = signal<string>('')
 
   constructor() {
-    this.server = io('http://localhost:3000', { autoConnect: false })
+    this.server = io(`${environment.BACKEND_PORT}`, { autoConnect: false , path: "/socket.io"})
     this.server.on('connect', () => {
       this.connected = true
       console.log('Connected to the server')
